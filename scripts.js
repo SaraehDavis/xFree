@@ -295,9 +295,13 @@
     damHeader.addEventListener('click', function(e) {
         e.stopPropagation();
         const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
-        
+     
+         // Zoom to dam location when expanding incidents
+            if (isVisible) {
+                MapController.focusOnDam(dam.id, 12); // Zoom level 12
+                
         if (isVisible) {
-            // Add image if it doesn't exist
+            // Add image if it exists
             if (!damItem.querySelector('.dam-image')&& dam.imageUrl && dam.imageUrl !== 'null') {
                 const image = document.createElement('img');
                 image.src = `assets/images/${dam.imageUrl}`;

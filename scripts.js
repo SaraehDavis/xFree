@@ -40,6 +40,19 @@
                             });
                         }
                     });
+                        
+                // Calculate total fatalities, treating blanks as 0
+                                dam.fatalities = 0;
+                                dam.incidents.forEach(incident => {
+                                    const count = parseInt(incident.fatalities);
+                                    incident.fatalities = isNaN(count) ? 0 : count;
+                                    dam.fatalities += incident.fatalities;
+                                });
+                            } else {
+                                // No incidents
+                                dam.fatalities = 0;
+                            }
+                        });
 
                     return json.dams;
                 } catch (error) {

@@ -338,7 +338,7 @@
                 damItem.removeChild(existingImage);
             }
         }
-    });
+    };
 
     return damItem;
 }

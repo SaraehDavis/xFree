@@ -296,10 +296,29 @@
         e.stopPropagation();
         const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
      
-         // Zoom to dam location when expanding incidents
-            if (isVisible) {
+         // Debug logging
+    console.log('Dam header clicked, isVisible:', isVisible);
+    console.log('Dam ID:', dam.id);
+    console.log('Dam coordinates:', dam.latitude, dam.longitude);
+    
+    // Zoom to dam location when expanding incidents
+    if (isVisible) {
+        try {
+            // Method 1: Try using the global MapController
+            if (window.MapController) {
+                console.log('Trying to focus on dam with MapController');
                 window.MapController.focusOnDam(dam.id, 12);
-                
+            }
+            
+            // Method 2: Direct map manipulation as backup
+            const map = window.MapController.getMap();
+            if (map && dam.latitude && dam.longitude) {
+                console.log('Direct map zoom to:', dam.latitude, dam.longitude);
+                map.setView([parseFloat(dam.latitude), parseFloat(dam.longitude)], 12);
+            }
+        } catch (error) {
+            console.error('Error zooming to dam:', error);
+        }
         if (isVisible) {
             // Add image if it exists
             if (!damItem.querySelector('.dam-image')&& dam.imageUrl && dam.imageUrl !== 'null') {

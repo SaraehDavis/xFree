@@ -252,13 +252,10 @@
             };
 
             // Private methods
-            function createDamListItem(dam) {
-    console.log('Creating dam item for:', dam.name); // Debug log
-    
+            function createDamListItem(dam) {More actions
     const damItem = document.createElement('div');
     damItem.className = 'dam-item';
     damItem.dataset.damId = dam.id;
-    
     // Create dam header with name, location and toggle button
     const damHeader = document.createElement('div');
     damHeader.className = 'dam-header';
@@ -274,11 +271,9 @@
     damHeader.appendChild(damInfo);
     damHeader.appendChild(toggleIndicator);
     damItem.appendChild(damHeader);
-    
     // Create incidents container (initially hidden)
     const incidentsContainer = document.createElement('div');
     incidentsContainer.className = 'dam-incidents-container';
-    
     // Add incident cards if there are any
     if (dam.incidents && dam.incidents.length > 0) {
         const incidentHeader = document.createElement('div');
@@ -296,39 +291,40 @@
         incidentsContainer.appendChild(noIncidents);
     }
     damItem.appendChild(incidentsContainer);
-    
     // Add click event for toggling incidents
     damHeader.addEventListener('click', function(e) {
-        console.log('CLICK EVENT FIRED for:', dam.name); // This should show up
-        alert('Click detected for: ' + dam.name); // Visual confirmation
-        
         e.stopPropagation();
         const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
-        
-        if (isVisible) {
-            console.log('Expanding incidents, trying to zoom to:', dam.latitude, dam.longitude);
-            
-            // Try direct access to the global map
-            try {
-                if (window.AppController && typeof window.AppController.highlightDam === 'function') {
-                    // Use existing AppController method but modify it
-                    console.log('Using AppController method');
-                } 
+
+         // Zoom to dam location when expanding incidents
+            if (isVisible) {
+         // Debug logging
+    console.log('Dam header clicked, isVisible:', isVisible);
+    console.log('Dam ID:', dam.id);
+    console.log('Dam coordinates:', dam.latitude, dam.longitude);
+    
+    // Zoom to dam location when expanding incidents
+    if (isVisible) {
+        try {
+            // Method 1: Try using the global MapController
+            if (window.MapController) {
+                console.log('Trying to focus on dam with MapController');
+                window.MapController.focusOnDam(dam.id, 12);
                 
-                // Direct map access
-                const mapInstance = MapController.getMap();
-                if (mapInstance && dam.latitude && dam.longitude) {
-                    console.log('Direct map zoom attempt');
-                    mapInstance.setView([parseFloat(dam.latitude), parseFloat(dam.longitude)], 12);
-                } else {
-                    console.log('Map or coordinates not available:', mapInstance, dam.latitude, dam.longitude);
-                }
-            } catch (error) {
-                console.error('Error in zoom:', error);
             }
             
-            // Add image if it doesn't exist
-            if (!damItem.querySelector('.dam-image') && dam.imageUrl && dam.imageUrl !== 'null') {
+            // Method 2: Direct map manipulation as backup
+            const map = window.MapController.getMap();
+            if (map && dam.latitude && dam.longitude) {
+                console.log('Direct map zoom to:', dam.latitude, dam.longitude);
+                map.setView([parseFloat(dam.latitude), parseFloat(dam.longitude)], 12);
+            }
+        } catch (error) {
+            console.error('Error zooming to dam:', error);
+        }
+        if (isVisible) {
+            // Add image if it exists
+            if (!damItem.querySelector('.dam-image')&& dam.imageUrl && dam.imageUrl !== 'null') {
                 const image = document.createElement('img');
                 image.src = `assets/images/${dam.imageUrl}`;
                 image.className = 'dam-image';
@@ -343,9 +339,9 @@
             }
         }
     });
-    
+
     return damItem;
-            }
+}
             function createIncidentCard(incident) {
                 const card = document.createElement('div');
                 card.className = 'incident-card';

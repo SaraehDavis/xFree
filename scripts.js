@@ -252,7 +252,7 @@
             };
 
             // Private methods
-            function createDamListItem(dam) {More actions
+            function createDamListItem(dam) {
     const damItem = document.createElement('div');
     damItem.className = 'dam-item';
     damItem.dataset.damId = dam.id;

@@ -291,57 +291,54 @@
         incidentsContainer.appendChild(noIncidents);
     }
     damItem.appendChild(incidentsContainer);
-    // Add click event for toggling incidents
-    damHeader.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
+     // Add click event for toggling incidents
+        damHeader.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
 
-         // Zoom to dam location when expanding incidents
+            // Zoom to dam location when expanding incidents
             if (isVisible) {
-         // Debug logging
-    console.log('Dam header clicked, isVisible:', isVisible);
-    console.log('Dam ID:', dam.id);
-    console.log('Dam coordinates:', dam.latitude, dam.longitude);
-    
-    // Zoom to dam location when expanding incidents
-    if (isVisible) {
-        try {
-            // Method 1: Try using the global MapController
-            if (window.MapController) {
-                console.log('Trying to focus on dam with MapController');
-                window.MapController.focusOnDam(dam.id, 12);
+                // Debug logging
+                console.log('Dam header clicked, isVisible:', isVisible);
+                console.log('Dam ID:', dam.id);
+                console.log('Dam coordinates:', dam.latitude, dam.longitude);
                 
+                try {
+                    // Method 1: Try using the global MapController
+                    if (window.MapController) {
+                        console.log('Trying to focus on dam with MapController');
+                        window.MapController.focusOnDam(dam.id, 12);
+                    }
+                    
+                    // Method 2: Direct map manipulation as backup
+                    const map = window.MapController.getMap();
+                    if (map && dam.latitude && dam.longitude) {
+                        console.log('Direct map zoom to:', dam.latitude, dam.longitude);
+                        map.setView([parseFloat(dam.latitude), parseFloat(dam.longitude)], 12);
+                    }
+                } catch (error) {
+                    console.error('Error zooming to dam:', error);
+                }
+                
+                // Add image if it exists
+                if (!damItem.querySelector('.dam-image') && dam.imageUrl && dam.imageUrl !== 'null') {
+                    const image = document.createElement('img');
+                    image.src = `assets/images/${dam.imageUrl}`;
+                    image.className = 'dam-image';
+                    image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                    damItem.insertBefore(image, incidentsContainer);
+                }
+            } else {
+                // Remove image if it exists when closing
+                const existingImage = damItem.querySelector('.dam-image');
+                if (existingImage) {
+                    damItem.removeChild(existingImage);
+                }
             }
-            
-            // Method 2: Direct map manipulation as backup
-            const map = window.MapController.getMap();
-            if (map && dam.latitude && dam.longitude) {
-                console.log('Direct map zoom to:', dam.latitude, dam.longitude);
-                map.setView([parseFloat(dam.latitude), parseFloat(dam.longitude)], 12);
-            }
-        } catch (error) {
-            console.error('Error zooming to dam:', error);
-        }
-        if (isVisible) {
-            // Add image if it exists
-            if (!damItem.querySelector('.dam-image')&& dam.imageUrl && dam.imageUrl !== 'null') {
-                const image = document.createElement('img');
-                image.src = `assets/images/${dam.imageUrl}`;
-                image.className = 'dam-image';
-                image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
-                damItem.insertBefore(image, incidentsContainer);
-            }
-        } else {
-            // Remove image if it exists when closing
-            const existingImage = damItem.querySelector('.dam-image');
-            if (existingImage) {
-                damItem.removeChild(existingImage);
-            }
-        }
-    });
+        });
 
-    return damItem;
-}
+        return damItem;
+    }
             function createIncidentCard(incident) {
                 const card = document.createElement('div');
                 card.className = 'incident-card';

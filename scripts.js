@@ -298,7 +298,7 @@
      
          // Zoom to dam location when expanding incidents
             if (isVisible) {
-                MapController.focusOnDam(dam.id);
+                window.MapController.focusOnDam(dam.id, 12);
                 
         if (isVisible) {
             // Add image if it exists
@@ -1012,6 +1012,9 @@ showDamDetails: function(damId) {
 
         // Make AppController globally accessible for the "View Incidents" button in popups
         window.AppController = AppController;
+
+       // Make MapController globally accessible
+       window.MapController = MapController;
 
         // Open the Google Form for reporting incidents
         function openReportForm() {

@@ -1,4 +1,4 @@
- // -------------------- DATA LAYER --------------------
+// -------------------- DATA LAYER --------------------
         const DataService = (function() {
             // Private variables
             let damData = [];
@@ -291,35 +291,32 @@
         incidentsContainer.appendChild(noIncidents);
     }
     damItem.appendChild(incidentsContainer);
-     // Add click event for toggling incidents
-        damHeader.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
-
-            // Zoom to dam location when expanding incidents
-            if (isVisible) {
-                window.MapController.focusOnDam(dam.id, 12);
-                    }
-                                 
-                // Add image if it exists
-                if (!damItem.querySelector('.dam-image') && dam.imageUrl && dam.imageUrl !== 'null') {
-                    const image = document.createElement('img');
-                    image.src = `assets/images/${dam.imageUrl}`;
-                    image.className = 'dam-image';
-                    image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
-                    damItem.insertBefore(image, incidentsContainer);
-                }
-            } else {
-                // Remove image if it exists when closing
-                const existingImage = damItem.querySelector('.dam-image');
-                if (existingImage) {
-                    damItem.removeChild(existingImage);
-                }
+    // Add click event for toggling incidents
+    damHeader.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
+        
+        if (isVisible) {
+            // Add image if it doesn't exist
+            if (!damItem.querySelector('.dam-image')&& dam.imageUrl && dam.imageUrl !== 'null') {
+                const image = document.createElement('img');
+                image.src = `assets/images/${dam.imageUrl}`;
+                image.className = 'dam-image';
+                image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                damItem.insertBefore(image, incidentsContainer);
             }
-        });
+        } else {
+            // Remove image if it exists when closing
+            const existingImage = damItem.querySelector('.dam-image');
+            if (existingImage) {
+                damItem.removeChild(existingImage);
+            }
+        }
+    });
+    
+    return damItem;
+}
 
-        return damItem;
-    }
             function createIncidentCard(incident) {
                 const card = document.createElement('div');
                 card.className = 'incident-card';
@@ -1011,9 +1008,6 @@ showDamDetails: function(damId) {
 
         // Make AppController globally accessible for the "View Incidents" button in popups
         window.AppController = AppController;
-
-       // Make MapController globally accessible
-       window.MapController = MapController;
 
         // Open the Google Form for reporting incidents
         function openReportForm() {

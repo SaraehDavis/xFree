@@ -250,15 +250,16 @@
         let markers = [];
         let damData = [];
         
-        // Mock data URL - This would be replaced with your Google Apps Script web app URL
+        // data URL - Google Apps Script web app URL
         const DATA_URL = "https://script.google.com/macros/s/AKfycbwdA7zSg1UWuDZ0AJyLS4YRPfBnXzVyDnT_cDW-je9prTChxPr3Cqq9P03i6KAWGH3Azg/exec";
         
         // Initialize the page
         async function initialize() {
             try {
-                // In a real implementation, this would fetch data from Google Apps Script
-                // For demo purposes, we'll use mock data
-                damData = generateMockData();
+              	 	const response = await fetch(DATA_URL);
+			        const json = await response.json();
+			        damData = json.dams;
+
                 
                 initializeMap();
                 updateStatistics();

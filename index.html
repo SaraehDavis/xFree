@@ -217,16 +217,24 @@
 
     <div class="stats-container">
         <div class="stat-box">
-            <div id="totalDams" class="stat-number">0</div>
-            <div class="stat-label">DOCUMENTED DAMS</div>
-        </div>
-        <div class="stat-box">
             <div id="totalFatalities" class="stat-number">0</div>
-            <div class="stat-label">TOTAL FATALITIES</div>
+            <div class="stat-label">TOTAL FATALITIES RECORDED</div>
         </div>
         <div class="stat-box">
-            <div id="mostDangerousDam" class="stat-number">0</div>
-            <div id="mostDangerousDamName" class="stat-label">FATALITIES AT MOST DANGEROUS DAM</div>
+            <div id="fatalSites" class="stat-number">0</div>
+            <div class="stat-label">NUMBER OF FATAL SITES</div>
+        </div>
+        <div class="stat-box">
+            <div id="maxFatalities" class="stat-number">0</div>
+            <div class="stat-label">MAX. FATALITIES AT A SINGLE LOCATION</div>
+        </div>
+        <div class="stat-box">
+            <div id="siteWithMostFatalities" class="stat-number">-</div>
+            <div class="stat-label">SITE WITH THE MOST FATALITIES</div>
+        </div>
+        <div class="stat-box">
+            <div id="avgFatalitiesPerSite" class="stat-number">0</div>
+            <div class="stat-label">AVERAGE FATALITIES PER SITE</div>
         </div>
     </div>
 
@@ -257,9 +265,8 @@
         async function initialize() {
             try {
               	 	const response = await fetch(DATA_URL);
-			        const json = await response.json();
-			        damData = json.dams;
-
+			const json = await response.json();
+			damData = json.dams;
                 
                 initializeMap();
                 updateStatistics();
@@ -313,8 +320,13 @@
             }
             
             content += `
-                <p><strong>Location:</strong> ${dam.location}</p>
-                <p><strong>Waterway:</strong> ${dam.waterway}</p>
+                <p><strong>Location:</strong> ${dam.location}</p>`;
+                
+            if (dam.county) {
+                content += `<p><strong>County:</strong> ${dam.county}</p>`;
+            }
+            
+            content += `
                 <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
                 <button onclick="showDamDetails(${dam.id})" style="background-color: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">View Incidents</button>
             </div>`;
@@ -336,22 +348,33 @@
             }
             
             detailsHtml += `
-                    <p><strong>Location:</strong> ${dam.location}</p>
-                    <p><strong>Waterway:</strong> ${dam.waterway}</p>
-                    <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
-                    <h4>Incident History</h4>
-                    <ul class="incidents-list">`;
+                    <p><strong>Location:</strong> ${dam.location}</p>`;
                     
-            dam.incidents.forEach(incident => {
-                detailsHtml += `
-                    <li class="incident-item">
-                        <strong>${incident.date}:</strong> ${incident.description} - 
-                        ${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}
-                    </li>`;
-            });
+            if (dam.county) {
+                detailsHtml += `<p><strong>County:</strong> ${dam.county}</p>`;
+            }
             
             detailsHtml += `
-                    </ul>
+                    <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
+                    <h4>Incident History</h4>`;
+                    
+            if (dam.incidents.length === 0) {
+                detailsHtml += `<p>No incident details available.</p>`;
+            } else {
+                detailsHtml += `<ul class="incidents-list">`;
+                
+                dam.incidents.forEach(incident => {
+                    detailsHtml += `
+                        <li class="incident-item">
+                            <strong>${incident.date}:</strong> ${incident.description} - 
+                            ${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}
+                        </li>`;
+                });
+                
+                detailsHtml += `</ul>`;
+            }
+            
+            detailsHtml += `
                 </div>`;
             
             // Find the marker for this dam and update its popup content
@@ -383,23 +406,31 @@
         
         // Update statistics
         function updateStatistics() {
-            const totalDams = damData.length;
-            
             let totalFatalities = 0;
             let mostDangerousDam = { name: '', fatalities: 0 };
+            let damsWithFatalities = 0;
             
             damData.forEach(dam => {
                 totalFatalities += dam.fatalities;
+                
+                if (dam.fatalities > 0) {
+                    damsWithFatalities++;
+                }
                 
                 if (dam.fatalities > mostDangerousDam.fatalities) {
                     mostDangerousDam = { name: dam.name, fatalities: dam.fatalities };
                 }
             });
             
-            document.getElementById('totalDams').textContent = totalDams;
+            // Calculate average fatalities per site (only for sites with fatalities)
+            const avgFatalitiesPerSite = damsWithFatalities > 0 ? 
+                (totalFatalities / damsWithFatalities).toFixed(1) : 0;
+            
             document.getElementById('totalFatalities').textContent = totalFatalities;
-            document.getElementById('mostDangerousDam').textContent = mostDangerousDam.fatalities;
-            document.getElementById('mostDangerousDamName').textContent = `FATALITIES AT ${mostDangerousDam.name.toUpperCase()}`;
+            document.getElementById('fatalSites').textContent = damsWithFatalities;
+            document.getElementById('maxFatalities').textContent = mostDangerousDam.fatalities;
+            document.getElementById('siteWithMostFatalities').textContent = mostDangerousDam.name;
+            document.getElementById('avgFatalitiesPerSite').textContent = avgFatalitiesPerSite;
         }
         
         // Populate the dam list
@@ -417,7 +448,7 @@
                 
                 damItem.innerHTML = `
                     <div class="dam-name">${dam.name}</div>
-                    <div class="dam-location">${dam.location} - ${dam.waterway}</div>
+                    <div class="dam-location">${dam.location}${dam.county ? ' - ' + dam.county : ''}</div>
                     <div class="dam-fatalities">${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
                 `;
                 
@@ -449,9 +480,9 @@
                     
                     const nameMatch = dam.name.toLowerCase().includes(searchTerm);
                     const locationMatch = dam.location.toLowerCase().includes(searchTerm);
-                    const waterwayMatch = dam.waterway.toLowerCase().includes(searchTerm);
+                    const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
                     
-                    item.style.display = (nameMatch || locationMatch || waterwayMatch) ? 'block' : 'none';
+                    item.style.display = (nameMatch || locationMatch || countyMatch) ? 'block' : 'none';
                 });
                 
                 // Filter map markers
@@ -460,9 +491,9 @@
                     
                     const nameMatch = dam.name.toLowerCase().includes(searchTerm);
                     const locationMatch = dam.location.toLowerCase().includes(searchTerm);
-                    const waterwayMatch = dam.waterway.toLowerCase().includes(searchTerm);
+                    const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
                     
-                    if (nameMatch || locationMatch || waterwayMatch) {
+                    if (nameMatch || locationMatch || countyMatch) {
                         marker.addTo(map);
                     } else {
                         marker.remove();

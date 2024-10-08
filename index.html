@@ -98,8 +98,136 @@
             transition: background-color 0.3s;
         }
         
-        .add-incident-btn:hover {
+        .add-incident-btn:hover,
+        .advanced-search-btn:hover {
             background-color: #2980b9;
+        }
+        
+        .advanced-search-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        
+        .advanced-search-panel {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .advanced-search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .advanced-search-header h3 {
+            margin: 0;
+            color: #333;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .search-group {
+            margin-bottom: 15px;
+        }
+        
+        .search-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .date-range-container,
+        .fatality-range-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .date-range-container span,
+        .fatality-range-container span {
+            color: #777;
+        }
+        
+        .search-group input[type="date"],
+        .search-group input[type="number"],
+        .search-group input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            flex-grow: 1;
+        }
+        
+        .search-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .search-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .reset-btn {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e1f0fa;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 13px;
+            color: #3498db;
+        }
+        
+        .filter-tag .remove-filter {
+            background: none;
+            border: none;
+            color: #3498db;
+            margin-left: 5px;
+            cursor: pointer;
+            font-weight: bold;
         }
         
         .dam-list {
@@ -180,6 +308,100 @@
             color: #333;
         }
         
+        /* New styles for expandable incidents */
+        .dam-incidents-container {
+            display: none;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        .dam-incidents-container.visible {
+            display: block;
+        }
+        
+        .incident-card {
+            background-color: white;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .incident-date {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .incident-description {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .incident-fatalities {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .documentation-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        .doc-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            text-decoration: none;
+            color: #3498db;
+            transition: background-color 0.2s;
+        }
+        
+        .doc-link:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .doc-link svg {
+            margin-right: 5px;
+        }
+        
+        .incident-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .toggle-indicator {
+            display: inline-block;
+            margin-left: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .toggle-indicator.open {
+            transform: rotate(180deg);
+        }
+        
+        .dam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .no-incidents {
+            font-style: italic;
+            color: #777;
+            text-align: center;
+            padding: 10px;
+        }
+        
         @media (max-width: 768px) {
             .map-container {
                 height: 350px;
@@ -239,8 +461,46 @@
     </div>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search by name of dam or location">
+        <input type="text" id="searchInput" placeholder="Search by name of dam, location, description...">
+        <button class="advanced-search-btn" id="advancedSearchBtn">Advanced Search</button>
         <button class="add-incident-btn" onclick="openReportForm()">Report Incident</button>
+    </div>
+    
+    <div class="advanced-search-panel" id="advancedSearchPanel">
+        <div class="advanced-search-header">
+            <h3>Advanced Search</h3>
+            <button class="close-btn" id="closeAdvancedSearch">×</button>
+        </div>
+        <div class="advanced-search-form">
+            <div class="search-group">
+                <label for="incidentStartDate">Incident Date Range:</label>
+                <div class="date-range-container">
+                    <input type="date" id="incidentStartDate" placeholder="Start Date">
+                    <span>to</span>
+                    <input type="date" id="incidentEndDate" placeholder="End Date">
+                </div>
+            </div>
+            <div class="search-group">
+                <label for="fatalityMin">Fatality Count:</label>
+                <div class="fatality-range-container">
+                    <input type="number" id="fatalityMin" placeholder="Min" min="0">
+                    <span>to</span>
+                    <input type="number" id="fatalityMax" placeholder="Max" min="0">
+                </div>
+            </div>
+            <div class="search-group">
+                <label for="keywordSearch">Keywords in Description:</label>
+                <input type="text" id="keywordSearch" placeholder="Search in incident descriptions...">
+            </div>
+            <div class="search-buttons">
+                <button class="search-btn" id="applyAdvancedSearch">Apply Filters</button>
+                <button class="reset-btn" id="resetAdvancedSearch">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="active-filters" id="activeFilters">
+        <!-- Active filters will appear here -->
     </div>
 
     <div class="dam-list" id="damList">
@@ -253,254 +513,720 @@
     </footer>
 
     <script>
-        // Global variables
-        let map;
-        let markers = [];
-        let damData = [];
+        // Using a clean architecture approach with modular design patterns
         
-        // data URL - Google Apps Script web app URL
-        const DATA_URL = "https://script.google.com/macros/s/AKfycbwdA7zSg1UWuDZ0AJyLS4YRPfBnXzVyDnT_cDW-je9prTChxPr3Cqq9P03i6KAWGH3Azg/exec";
-        
-        // Initialize the page
-        async function initialize() {
-            try {
-              	 	const response = await fetch(DATA_URL);
-			const json = await response.json();
-			damData = json.dams;
-                
-                initializeMap();
-                updateStatistics();
-                populateDamList();
-                setupSearchFunctionality();
-                
-                // Hide loading screen
-                document.querySelector('.loading').style.display = 'none';
-                
-                // Update last updated time
-                document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
-            } catch (error) {
-                console.error("Error initializing the application:", error);
-                alert("There was an error loading the data. Please try again later.");
-            }
-        }
-        
-        // Initialize the map
-        function initializeMap() {
-            // Center the map on the US
-            map = L.map('map').setView([39.8283, -98.5795], 4);
+        // -------------------- DATA LAYER --------------------
+        const DataService = (function() {
+            // Private variables
+            let damData = [];
+            const DATA_URL = "https://script.google.com/macros/s/AKfycbwdA7zSg1UWuDZ0AJyLS4YRPfBnXzVyDnT_cDW-je9prTChxPr3Cqq9P03i6KAWGH3Azg/exec";
             
-            // Add the tile layer (OpenStreetMap)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            
-            // Add markers for each dam
-            damData.forEach(dam => {
-                const marker = L.marker([dam.latitude, dam.longitude])
-                    .addTo(map)
-                    .bindPopup(createPopupContent(dam));
-                
-                marker.damId = dam.id;
-                markers.push(marker);
-                
-                // Event listener for popup open to highlight dam in list
-                marker.on('click', function() {
-                    highlightDamInList(dam.id);
-                });
-            });
-        }
-        
-        // Create popup content for a dam
-        function createPopupContent(dam) {
-            let content = `<div class="marker-popup">
-                <h3>${dam.name}</h3>`;
-                
-            if (dam.imageUrl) {
-                content += `<img src="${dam.imageUrl}" alt="${dam.name}">`;
-            }
-            
-            content += `
-                <p><strong>Location:</strong> ${dam.location}</p>`;
-                
-            if (dam.county) {
-                content += `<p><strong>County:</strong> ${dam.county}</p>`;
-            }
-            
-            content += `
-                <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
-                <button onclick="showDamDetails(${dam.id})" style="background-color: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">View Incidents</button>
-            </div>`;
-            
-            return content;
-        }
-        
-        // Show detailed information about a dam and its incidents
-        function showDamDetails(damId) {
-            const dam = damData.find(d => d.id === damId);
-            if (!dam) return;
-            
-            let detailsHtml = `
-                <div class="marker-popup">
-                    <h3>${dam.name}</h3>`;
+            // Private methods
+            async function fetchData() {
+                try {
+                    const response = await fetch(DATA_URL);
+                    const json = await response.json();
                     
-            if (dam.imageUrl) {
-                detailsHtml += `<img src="${dam.imageUrl}" alt="${dam.name}">`;
-            }
-            
-            detailsHtml += `
-                    <p><strong>Location:</strong> ${dam.location}</p>`;
+                    // Process each dam to sort incidents by date (newest first)
+                    json.dams.forEach(dam => {
+                        if (dam.incidents && dam.incidents.length > 0) {
+                            // Sort incidents by date (newest first)
+                            dam.incidents.sort((a, b) => {
+                                const dateA = new Date(parseDateString(a.date));
+                                const dateB = new Date(parseDateString(b.date));
+                                return dateB - dateA;
+                            });
+                        }
+                    });
                     
-            if (dam.county) {
-                detailsHtml += `<p><strong>County:</strong> ${dam.county}</p>`;
-            }
-            
-            detailsHtml += `
-                    <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
-                    <h4>Incident History</h4>`;
-                    
-            if (dam.incidents.length === 0) {
-                detailsHtml += `<p>No incident details available.</p>`;
-            } else {
-                detailsHtml += `<ul class="incidents-list">`;
-                
-                dam.incidents.forEach(incident => {
-                    detailsHtml += `
-                        <li class="incident-item">
-                            <strong>${incident.date}:</strong> ${incident.description} - 
-                            ${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}
-                        </li>`;
-                });
-                
-                detailsHtml += `</ul>`;
-            }
-            
-            detailsHtml += `
-                </div>`;
-            
-            // Find the marker for this dam and update its popup content
-            const marker = markers.find(m => m.damId === damId);
-            if (marker) {
-                marker.setPopupContent(detailsHtml);
-                if (!marker.isPopupOpen()) {
-                    marker.openPopup();
+                    return json.dams;
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    throw new Error("Failed to fetch dam data");
                 }
             }
             
-            // Scroll to the dam in the list and highlight it
-            highlightDamInList(damId);
-        }
-        
-        // Highlight a dam in the list
-        function highlightDamInList(damId) {
-            const listItems = document.querySelectorAll('.dam-item');
-            
-            listItems.forEach(item => {
-                item.style.backgroundColor = '';
+            // Helper function to parse date strings of various formats
+            function parseDateString(dateStr) {
+                // Try to handle various date formats
+                if (!dateStr) return new Date(0); // Default to ancient date if missing
                 
-                if (parseInt(item.dataset.damId) === damId) {
-                    item.style.backgroundColor = '#e3f2fd';
-                    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            });
-        }
-        
-        // Update statistics
-        function updateStatistics() {
-            let totalFatalities = 0;
-            let mostDangerousDam = { name: '', fatalities: 0 };
-            let damsWithFatalities = 0;
-            
-            damData.forEach(dam => {
-                totalFatalities += dam.fatalities;
-                
-                if (dam.fatalities > 0) {
-                    damsWithFatalities++;
+                // Handle MM/DD/YYYY or MM-DD-YYYY
+                const usMatch = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+                if (usMatch) {
+                    return new Date(`${usMatch[3]}-${usMatch[1].padStart(2, '0')}-${usMatch[2].padStart(2, '0')}`);
                 }
                 
-                if (dam.fatalities > mostDangerousDam.fatalities) {
-                    mostDangerousDam = { name: dam.name, fatalities: dam.fatalities };
+                // Handle YYYY-MM-DD (ISO)
+                const isoMatch = dateStr.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+                if (isoMatch) {
+                    return new Date(dateStr);
                 }
-            });
+                
+                // Try to parse directly (for "Month Day, Year" format)
+                const date = new Date(dateStr);
+                if (!isNaN(date.getTime())) {
+                    return date;
+                }
+                
+                // Default if nothing works
+                console.warn(`Could not parse date: ${dateStr}`);
+                return new Date(0);
+            }
             
-            // Calculate average fatalities per site (only for sites with fatalities)
-            const avgFatalitiesPerSite = damsWithFatalities > 0 ? 
-                (totalFatalities / damsWithFatalities).toFixed(1) : 0;
+            // Extract date parts for filtering
+            function extractDateParts(dateStr) {
+                const date = parseDateString(dateStr);
+                return {
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1, // 1-12
+                    day: date.getDate()
+                };
+            }
             
-            document.getElementById('totalFatalities').textContent = totalFatalities;
-            document.getElementById('fatalSites').textContent = damsWithFatalities;
-            document.getElementById('maxFatalities').textContent = mostDangerousDam.fatalities;
-            document.getElementById('siteWithMostFatalities').textContent = mostDangerousDam.name;
-            document.getElementById('avgFatalitiesPerSite').textContent = avgFatalitiesPerSite;
-        }
-        
-        // Populate the dam list
-        function populateDamList() {
-            const damListElement = document.getElementById('damList');
-            damListElement.innerHTML = '';
+            // Public API
+            return {
+                initialize: async function() {
+                    damData = await fetchData();
+                    return damData;
+                },
+                
+                getData: function() {
+                    return damData;
+                },
+                
+                getDamById: function(id) {
+                    return damData.find(dam => dam.id === id);
+                },
+                
+                getSortedDams: function(sortBy = 'fatalities', order = 'desc') {
+                    return [...damData].sort((a, b) => {
+                        if (order === 'desc') {
+                            return b[sortBy] - a[sortBy];
+                        } else {
+                            return a[sortBy] - b[sortBy];
+                        }
+                    });
+                },
+                
+                searchDams: function(criteria) {
+                    return damData.filter(dam => {
+                        // Basic text search
+                        if (criteria.text) {
+                            const searchTerm = criteria.text.toLowerCase();
+                            const nameMatch = dam.name.toLowerCase().includes(searchTerm);
+                            const locationMatch = dam.location.toLowerCase().includes(searchTerm);
+                            const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+                            
+                            // Check incidents descriptions
+                            let descriptionMatch = false;
+                            if (dam.incidents && dam.incidents.length > 0) {
+                                descriptionMatch = dam.incidents.some(incident => 
+                                    incident.description && incident.description.toLowerCase().includes(searchTerm)
+                                );
+                            }
+                            
+                            if (!(nameMatch || locationMatch || countyMatch || descriptionMatch)) {
+                                return false;
+                            }
+                        }
+                        
+                        // Fatality count range search
+                        if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
+                            const minFatalities = criteria.minFatalities !== undefined ? parseInt(criteria.minFatalities) : 0;
+                            const maxFatalities = criteria.maxFatalities !== undefined ? parseInt(criteria.maxFatalities) : Infinity;
+                            
+                            if (dam.fatalities < minFatalities || dam.fatalities > maxFatalities) {
+                                return false;
+                            }
+                        }
+                        
+                        // Date range search - check if any incident falls within the range
+                        if (criteria.startDate || criteria.endDate) {
+                            // If dam has no incidents, it doesn't match date range criteria
+                            if (!dam.incidents || dam.incidents.length === 0) {
+                                return false;
+                            }
+                            
+                            const startDate = criteria.startDate ? new Date(criteria.startDate) : new Date(0);
+                            const endDate = criteria.endDate ? new Date(criteria.endDate) : new Date(9999, 11, 31);
+                            
+                            // Check if at least one incident falls within the date range
+                            const hasIncidentInRange = dam.incidents.some(incident => {
+                                const incidentDate = parseDateString(incident.date);
+                                return incidentDate >= startDate && incidentDate <= endDate;
+                            });
+                            
+                            if (!hasIncidentInRange) {
+                                return false;
+                            }
+                        }
+                        
+                        // If passed all filters
+                        return true;
+                    });
+                },
+                
+                // Utility function exposed for date parsing elsewhere
+                parseDateString: parseDateString
+            };
+        })();
+
+        // -------------------- UI LAYER --------------------
+        const UIController = (function() {
+            // DOM references
+            const DOMElements = {
+                map: document.getElementById('map'),
+                damList: document.getElementById('damList'),
+                searchInput: document.getElementById('searchInput'),
+                loading: document.querySelector('.loading'),
+                lastUpdated: document.getElementById('lastUpdated'),
+                totalFatalities: document.getElementById('totalFatalities'),
+                fatalSites: document.getElementById('fatalSites'),
+                maxFatalities: document.getElementById('maxFatalities'),
+                siteWithMostFatalities: document.getElementById('siteWithMostFatalities'),
+                avgFatalitiesPerSite: document.getElementById('avgFatalitiesPerSite'),
+                
+                // Advanced search elements
+                advancedSearchBtn: document.getElementById('advancedSearchBtn'),
+                advancedSearchPanel: document.getElementById('advancedSearchPanel'),
+                closeAdvancedSearch: document.getElementById('closeAdvancedSearch'),
+                incidentStartDate: document.getElementById('incidentStartDate'),
+                incidentEndDate: document.getElementById('incidentEndDate'),
+                fatalityMin: document.getElementById('fatalityMin'),
+                fatalityMax: document.getElementById('fatalityMax'),
+                keywordSearch: document.getElementById('keywordSearch'),
+                applyAdvancedSearch: document.getElementById('applyAdvancedSearch'),
+                resetAdvancedSearch: document.getElementById('resetAdvancedSearch'),
+                activeFilters: document.getElementById('activeFilters')
+            };
             
-            // Sort dams by fatalities (highest first)
-            const sortedDams = [...damData].sort((a, b) => b.fatalities - a.fatalities);
-            
-            sortedDams.forEach(dam => {
+            // Private methods
+            function createDamListItem(dam) {
                 const damItem = document.createElement('div');
                 damItem.className = 'dam-item';
                 damItem.dataset.damId = dam.id;
                 
-                damItem.innerHTML = `
+                // Create dam header with name, location and toggle button
+                const damHeader = document.createElement('div');
+                damHeader.className = 'dam-header';
+                
+                const damInfo = document.createElement('div');
+                damInfo.innerHTML = `
                     <div class="dam-name">${dam.name}</div>
                     <div class="dam-location">${dam.location}${dam.county ? ' - ' + dam.county : ''}</div>
                     <div class="dam-fatalities">${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
                 `;
                 
-                damItem.addEventListener('click', () => {
-                    // Find the marker for this dam and open its popup
-                    const marker = markers.find(m => m.damId === dam.id);
-                    if (marker) {
-                        map.setView([dam.latitude, dam.longitude], 12);
-                        showDamDetails(dam.id);
-                    }
+                const toggleIndicator = document.createElement('span');
+                toggleIndicator.className = 'toggle-indicator';
+                toggleIndicator.innerHTML = '▼';
+                
+                damHeader.appendChild(damInfo);
+                damHeader.appendChild(toggleIndicator);
+                damItem.appendChild(damHeader);
+                
+                // Create incidents container (initially hidden)
+                const incidentsContainer = document.createElement('div');
+                incidentsContainer.className = 'dam-incidents-container';
+                
+                // Add incident cards if there are any
+                if (dam.incidents && dam.incidents.length > 0) {
+                    const incidentHeader = document.createElement('div');
+                    incidentHeader.className = 'incident-header';
+                    incidentHeader.textContent = `Incident History (${dam.incidents.length} ${dam.incidents.length === 1 ? 'incident' : 'incidents'})`;
+                    incidentsContainer.appendChild(incidentHeader);
+                    
+                    dam.incidents.forEach(incident => {
+                        const incidentCard = createIncidentCard(incident);
+                        incidentsContainer.appendChild(incidentCard);
+                    });
+                } else {
+                    const noIncidents = document.createElement('div');
+                    noIncidents.className = 'no-incidents';
+                    noIncidents.textContent = 'No incident details available.';
+                    incidentsContainer.appendChild(noIncidents);
+                }
+                
+                damItem.appendChild(incidentsContainer);
+                
+                // Add click event for toggling incidents
+                damHeader.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleIncidents(incidentsContainer, toggleIndicator);
                 });
                 
-                damListElement.appendChild(damItem);
-            });
-        }
-        
-        // Setup search functionality
-        function setupSearchFunctionality() {
-            const searchInput = document.getElementById('searchInput');
+                return damItem;
+            }
             
-            searchInput.addEventListener('input', () => {
-                const searchTerm = searchInput.value.toLowerCase();
+            function createIncidentCard(incident) {
+                const card = document.createElement('div');
+                card.className = 'incident-card';
                 
-                // Filter dam list
-                const damItems = document.querySelectorAll('.dam-item');
-                damItems.forEach(item => {
-                    const damId = parseInt(item.dataset.damId);
-                    const dam = damData.find(d => d.id === damId);
+                let cardHtml = `
+                    <div class="incident-date">${incident.date}</div>
+                    <div class="incident-fatalities">${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
+                    <div class="incident-description">${incident.description}</div>
+                `;
+                
+                // Add documentation links if available
+                let docsHtml = '';
+                if (incident.webDocumentation || incident.fileDocumentation) {
+                    docsHtml = '<div class="documentation-links">';
                     
-                    const nameMatch = dam.name.toLowerCase().includes(searchTerm);
-                    const locationMatch = dam.location.toLowerCase().includes(searchTerm);
-                    const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+                    if (incident.webDocumentation) {
+                        docsHtml += `
+                            <a href="${incident.webDocumentation}" target="_blank" class="doc-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Web Documentation
+                            </a>
+                        `;
+                    }
                     
-                    item.style.display = (nameMatch || locationMatch || countyMatch) ? 'block' : 'none';
+                    if (incident.fileDocumentation) {
+                        docsHtml += `
+                            <a href="${incident.fileDocumentation}" target="_blank" class="doc-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                                File Documentation
+                            </a>
+                        `;
+                    }
+                    
+                    docsHtml += '</div>';
+                }
+                
+                card.innerHTML = cardHtml + docsHtml;
+                return card;
+            }
+            
+            function toggleIncidents(container, indicator) {
+                const isVisible = container.classList.toggle('visible');
+                
+                if (isVisible) {
+                    indicator.classList.add('open');
+                    indicator.innerHTML = '▲';
+                } else {
+                    indicator.classList.remove('open');
+                    indicator.innerHTML = '▼';
+                }
+            }
+            
+            function createPopupContent(dam) {
+                let content = `<div class="marker-popup">
+                    <h3>${dam.name}</h3>`;
+                    
+                if (dam.imageUrl) {
+                    content += `<img src="${dam.imageUrl}" alt="${dam.name}">`;
+                }
+                
+                content += `
+                    <p><strong>Location:</strong> ${dam.location}</p>`;
+                    
+                if (dam.county) {
+                    content += `<p><strong>County:</strong> ${dam.county}</p>`;
+                }
+                
+                content += `
+                    <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
+                    <button onclick="AppController.showDamDetails(${dam.id})" style="background-color: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">View Incidents</button>
+                </div>`;
+                
+                return content;
+            }
+            
+            // Public API
+            return {
+                getDOMElements: function() {
+                    return DOMElements;
+                },
+                
+                populateDamList: function(dams) {
+                    DOMElements.damList.innerHTML = '';
+                    
+                    dams.forEach(dam => {
+                        const damItem = createDamListItem(dam);
+                        DOMElements.damList.appendChild(damItem);
+                    });
+                },
+                
+                createPopupContent: createPopupContent,
+                
+                updateStatistics: function(stats) {
+                    DOMElements.totalFatalities.textContent = stats.totalFatalities;
+                    DOMElements.fatalSites.textContent = stats.fatalSites;
+                    DOMElements.maxFatalities.textContent = stats.maxFatalities;
+                    DOMElements.siteWithMostFatalities.textContent = stats.siteWithMostFatalities;
+                    DOMElements.avgFatalitiesPerSite.textContent = stats.avgFatalitiesPerSite;
+                },
+                
+                highlightDamInList: function(damId) {
+                    const listItems = document.querySelectorAll('.dam-item');
+                    
+                    listItems.forEach(item => {
+                        item.style.backgroundColor = '';
+                        
+                        if (parseInt(item.dataset.damId) === damId) {
+                            item.style.backgroundColor = '#e3f2fd';
+                            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            // Find and expand the incidents container
+                            const incidentsContainer = item.querySelector('.dam-incidents-container');
+                            const toggleIndicator = item.querySelector('.toggle-indicator');
+                            
+                            if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
+                                toggleIncidents(incidentsContainer, toggleIndicator);
+                            }
+                        }
+                    });
+                },
+                
+                hideLoading: function() {
+                    DOMElements.loading.style.display = 'none';
+                },
+                
+                updateLastUpdated: function() {
+                    DOMElements.lastUpdated.textContent = new Date().toLocaleDateString();
+                },
+                
+                showError: function(message) {
+                    alert(message);
+                }
+            };
+        })();
+
+        // -------------------- MAP CONTROLLER --------------------
+        const MapController = (function() {
+            // Private variables
+            let map;
+            let markers = [];
+            
+            // Public API
+            return {
+                initialize: function(mapElement) {
+                    // Center the map on the US
+                    map = L.map(mapElement).setView([39.8283, -98.5795], 4);
+                    
+                    // Add the tile layer (OpenStreetMap)
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+                    
+                    return map;
+                },
+                
+                addMarkers: function(dams, popupContentCallback, markerClickCallback) {
+                    // Clear any existing markers
+                    markers.forEach(marker => marker.remove());
+                    markers = [];
+                    
+                    // Add markers for each dam
+                    dams.forEach(dam => {
+                        const marker = L.marker([dam.latitude, dam.longitude])
+                            .addTo(map)
+                            .bindPopup(popupContentCallback(dam));
+                        
+                        marker.damId = dam.id;
+                        markers.push(marker);
+                        
+                        // Event listener for popup open
+                        marker.on('click', function() {
+                            markerClickCallback(dam.id);
+                        });
+                    });
+                    
+                    return markers;
+                },
+                
+                filterMarkers: function(visibleDamIds) {
+                    markers.forEach(marker => {
+                        if (visibleDamIds.includes(marker.damId)) {
+                            if (!map.hasLayer(marker)) {
+                                marker.addTo(map);
+                            }
+                        } else {
+                            marker.remove();
+                        }
+                    });
+                },
+                
+                focusOnDam: function(damId, zoomLevel = 12) {
+                    const dam = DataService.getDamById(damId);
+                    if (dam) {
+                        map.setView([dam.latitude, dam.longitude], zoomLevel);
+                        
+                        // Find and open marker popup
+                        const marker = markers.find(m => m.damId === damId);
+                        if (marker) {
+                            marker.openPopup();
+                        }
+                    }
+                },
+                
+                getMap: function() {
+                    return map;
+                },
+                
+                getMarkers: function() {
+                    return markers;
+                },
+                
+                updateMarkerPopup: function(damId, content) {
+                    const marker = markers.find(m => m.damId === damId);
+                    if (marker) {
+                        marker.setPopupContent(content);
+                        if (!marker.isPopupOpen()) {
+                            marker.openPopup();
+                        }
+                    }
+                }
+            };
+        })();
+
+        // -------------------- APP CONTROLLER (MAIN) --------------------
+        const AppController = (function(dataService, uiCtrl, mapCtrl) {
+            // Private variables
+            const DOM = uiCtrl.getDOMElements();
+            
+            // Private methods
+            function setupEventListeners() {
+                // Basic search functionality
+                DOM.searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    performSearch({ text: searchTerm });
                 });
                 
-                // Filter map markers
-                markers.forEach(marker => {
-                    const dam = damData.find(d => d.id === marker.damId);
+                // Advanced search toggle
+                DOM.advancedSearchBtn.addEventListener('click', function() {
+                    DOM.advancedSearchPanel.style.display = DOM.advancedSearchPanel.style.display === 'block' ? 'none' : 'block';
+                });
+                
+                // Close advanced search
+                DOM.closeAdvancedSearch.addEventListener('click', function() {
+                    DOM.advancedSearchPanel.style.display = 'none';
+                });
+                
+                // Apply advanced search filters
+                DOM.applyAdvancedSearch.addEventListener('click', function() {
+                    applyAdvancedSearch();
+                });
+                
+                // Reset advanced search filters
+                DOM.resetAdvancedSearch.addEventListener('click', function() {
+                    resetAdvancedSearch();
+                });
+            }
+            
+            // Perform search based on search criteria
+            function performSearch(criteria) {
+                // Apply search
+                const filteredDams = dataService.searchDams(criteria);
+                
+                // Update UI with filtered dams
+                uiCtrl.populateDamList(filteredDams);
+                
+                // Update map markers
+                const visibleDamIds = filteredDams.map(dam => dam.id);
+                mapCtrl.filterMarkers(visibleDamIds);
+                
+                // Update active filters display
+                updateActiveFilters(criteria);
+            }
+            
+            // Apply advanced search filters
+            function applyAdvancedSearch() {
+                const criteria = {
+                    text: DOM.searchInput.value.toLowerCase(),
+                    startDate: DOM.incidentStartDate.value || undefined,
+                    endDate: DOM.incidentEndDate.value || undefined,
+                    minFatalities: DOM.fatalityMin.value || undefined,
+                    maxFatalities: DOM.fatalityMax.value || undefined,
+                    keywords: DOM.keywordSearch.value || undefined
+                };
+                
+                // Combine keyword search with text search
+                if (criteria.keywords) {
+                    criteria.text = criteria.text ? 
+                        `${criteria.text} ${criteria.keywords}` : 
+                        criteria.keywords;
+                }
+                
+                performSearch(criteria);
+                
+                // Hide the advanced search panel
+                DOM.advancedSearchPanel.style.display = 'none';
+            }
+            
+            // Reset advanced search filters
+            function resetAdvancedSearch() {
+                // Clear all advanced search inputs
+                DOM.incidentStartDate.value = '';
+                DOM.incidentEndDate.value = '';
+                DOM.fatalityMin.value = '';
+                DOM.fatalityMax.value = '';
+                DOM.keywordSearch.value = '';
+                
+                // Reset to basic search only
+                performSearch({ text: DOM.searchInput.value.toLowerCase() });
+            }
+            
+            // Update active filters display
+            function updateActiveFilters(criteria) {
+                DOM.activeFilters.innerHTML = '';
+                
+                // Date range filter
+                if (criteria.startDate || criteria.endDate) {
+                    const dateLabel = criteria.startDate && criteria.endDate ?
+                        `Date: ${formatDate(criteria.startDate)} to ${formatDate(criteria.endDate)}` :
+                        criteria.startDate ?
+                            `Date: After ${formatDate(criteria.startDate)}` :
+                            `Date: Before ${formatDate(criteria.endDate)}`;
                     
-                    const nameMatch = dam.name.toLowerCase().includes(searchTerm);
-                    const locationMatch = dam.location.toLowerCase().includes(searchTerm);
-                    const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+                    addFilterTag(dateLabel, function() {
+                        DOM.incidentStartDate.value = '';
+                        DOM.incidentEndDate.value = '';
+                        applyAdvancedSearch();
+                    });
+                }
+                
+                // Fatality range filter
+                if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
+                    const fatalityLabel = criteria.minFatalities !== undefined && criteria.maxFatalities !== undefined ?
+                        `Fatalities: ${criteria.minFatalities} to ${criteria.maxFatalities}` :
+                        criteria.minFatalities !== undefined ?
+                            `Fatalities: Min ${criteria.minFatalities}` :
+                            `Fatalities: Max ${criteria.maxFatalities}`;
                     
-                    if (nameMatch || locationMatch || countyMatch) {
-                        marker.addTo(map);
-                    } else {
-                        marker.remove();
+                    addFilterTag(fatalityLabel, function() {
+                        DOM.fatalityMin.value = '';
+                        DOM.fatalityMax.value = '';
+                        applyAdvancedSearch();
+                    });
+                }
+                
+                // Keyword filter (only if different from search input)
+                if (criteria.keywords && criteria.keywords !== criteria.text) {
+                    addFilterTag(`Keywords: ${criteria.keywords}`, function() {
+                        DOM.keywordSearch.value = '';
+                        applyAdvancedSearch();
+                    });
+                }
+            }
+            
+            // Helper function to add a filter tag
+            function addFilterTag(label, removeCallback) {
+                const tag = document.createElement('div');
+                tag.className = 'filter-tag';
+                tag.innerHTML = `
+                    ${label}
+                    <button class="remove-filter">×</button>
+                `;
+                
+                // Add remove filter event
+                tag.querySelector('.remove-filter').addEventListener('click', removeCallback);
+                
+                DOM.activeFilters.appendChild(tag);
+            }
+            
+            // Format date for display
+            function formatDate(dateStr) {
+                const date = new Date(dateStr);
+                return date.toLocaleDateString();
+            }
+            
+            function calculateStatistics() {
+                const dams = dataService.getData();
+                let totalFatalities = 0;
+                let mostDangerousDam = { name: '', fatalities: 0 };
+                let damsWithFatalities = 0;
+                
+                dams.forEach(dam => {
+                    totalFatalities += dam.fatalities;
+                    
+                    if (dam.fatalities > 0) {
+                        damsWithFatalities++;
+                    }
+                    
+                    if (dam.fatalities > mostDangerousDam.fatalities) {
+                        mostDangerousDam = { name: dam.name, fatalities: dam.fatalities };
                     }
                 });
-            });
-        }
+                
+                // Calculate average fatalities per site (only for sites with fatalities)
+                const avgFatalitiesPerSite = damsWithFatalities > 0 ? 
+                    (totalFatalities / damsWithFatalities).toFixed(1) : 0;
+                
+                return {
+                    totalFatalities,
+                    fatalSites: damsWithFatalities,
+                    maxFatalities: mostDangerousDam.fatalities,
+                    siteWithMostFatalities: mostDangerousDam.name,
+                    avgFatalitiesPerSite
+                };
+            }
+            
+            // Public API
+            return {
+                init: async function() {
+                    try {
+                        // Initialize data
+                        await dataService.initialize();
+                        
+                        // Initialize map
+                        mapCtrl.initialize(DOM.map);
+                        
+                        // Add markers to map
+                        mapCtrl.addMarkers(
+                            dataService.getData(),
+                            uiCtrl.createPopupContent,
+                            this.highlightDam
+                        );
+                        
+                        // Calculate and display statistics
+                        const stats = calculateStatistics();
+                        uiCtrl.updateStatistics(stats);
+                        
+                        // Populate dam list with sorted dams
+                        const sortedDams = dataService.getSortedDams();
+                        uiCtrl.populateDamList(sortedDams);
+                        
+                        // Setup event listeners
+                        setupEventListeners();
+                        
+                        // Update UI state
+                        uiCtrl.hideLoading();
+                        uiCtrl.updateLastUpdated();
+                    } catch (error) {
+                        console.error("Error initializing the application:", error);
+                        uiCtrl.showError("There was an error loading the data. Please try again later.");
+                    }
+                },
+                
+                highlightDam: function(damId) {
+                    uiCtrl.highlightDamInList(damId);
+                },
+                
+                showDamDetails: function(damId) {
+                    // Focus map on the dam
+                    mapCtrl.focusOnDam(damId);
+                    
+                    // Highlight and scroll to the dam in the list
+                    uiCtrl.highlightDamInList(damId);
+                }
+            };
+        })(DataService, UIController, MapController);
+
+        // Make AppController globally accessible for the "View Incidents" button in popups
+        window.AppController = AppController;
         
         // Open the Google Form for reporting incidents
         function openReportForm() {
@@ -508,9 +1234,10 @@
             window.open('https://forms.gle/YourGoogleFormID', '_blank');
         }
         
-        
         // Initialize when the page loads
-        window.addEventListener('load', initialize);
+        window.addEventListener('load', function() {
+            AppController.init();
+        });
     </script>
 </body>
 </html>

@@ -727,12 +727,12 @@
                 damItem.appendChild(damHeader);
 
                 // Create photo element if photo exists
-                if (dam.photo) {
-                    const photo = document.createElement('img');
-                    photo.src = `/docs/assets/images/${dam.photo}`;
-                    photo.alt = `${dam.name} photo`;
-                    photo.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
-                    damItem.appendChild(photo);
+                if (dam.image) {
+                    const image = document.createElement('img');
+                    image.src = `/docs/assets/images/${dam.image}`;
+                    image.alt = `${dam.name} photo`;
+                    image.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
+                    damItem.appendChild(image);
                 }
 
                 

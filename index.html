@@ -727,9 +727,9 @@
                 damItem.appendChild(damHeader);
 
                 // Create photo element if photo exists
-                if (dam.image) {
+                if (dam.imageUrl) {
                     const image = document.createElement('img');
-                    image.src = `/docs/assets/images/${dam.image}`;
+                    image.src = `docs/assets/images/${dam.imageUrl}`;
                     image.alt = `${dam.name} photo`;
                     image.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
                     damItem.appendChild(image);

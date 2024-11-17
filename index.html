@@ -778,15 +778,6 @@
         <div class="incident-fatalities">${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
         <div class="incident-description">${incident.description}</div>
     `;
-
-    // Append image if available
-    if (incident.image) {
-        const imagePath = `docs/assets/images/${incident.image}`;
-        cardHtml += `
-            <div class="incident-image">
-                <img src="${imagePath}" alt="Incident photo" style="max-width: 100%; border-radius: 4px; margin-bottom: 10px;">
-            </div>
-        `;
     }
 
     // Documentation links (if any)
@@ -845,7 +836,7 @@
                     <h3>${dam.name}</h3>`;
                     
                 if (dam.imageUrl) {
-                    content += `<img src="${dam.imageUrl}" alt="${dam.name}">`;
+                    content += `<img src="docs/assets/images/${dam.imageUrl}"  alt="${dam.name}">`;
                 }
                 
                 content += `

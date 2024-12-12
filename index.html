@@ -730,7 +730,6 @@
                 if (dam.imageUrl) {
                     const image = document.createElement('img');
                     image.src = `docs/assets/images/${dam.imageUrl}`;
-                    image.alt = `${dam.name} photo`;
                     image.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
                     damItem.appendChild(image);
                 }
@@ -779,14 +778,6 @@
         <div class="incident-description">${incident.description}</div>
     `;
 
-    // Append image if available
-    if (incident.image) {
-        const imagePath = `docs/assets/images/${incident.image}`;
-        cardHtml += `
-            <div class="incident-image">
-                <img src="${imagePath}" alt="Incident photo" style="max-width: 100%; border-radius: 4px; margin-bottom: 10px;">
-            </div>
-        `;
     }
 
     // Documentation links (if any)
@@ -845,8 +836,7 @@
                     <h3>${dam.name}</h3>`;
 
                 if (dam.imageUrl) {
-                    content += `<img src="${dam.imageUrl}" alt="${dam.name}">`;
-                    content += `<img src="docs/assets/images/${dam.imageUrl}"  alt="${dam.name}">`;
+                    content += `<img src="docs/assets/images/${dam.imageUrl}">`;
                 }
 
                 content += `

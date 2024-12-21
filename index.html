@@ -13,6 +13,7 @@
             padding: 0;
             font-family: Arial, sans-serif;
         }
+        
 
         body {
             padding: 20px;
@@ -20,16 +21,19 @@
             margin: 0 auto;
             background-color: #f5f5f5;
         }
+        
 
         header {
             text-align: center;
             margin-bottom: 20px;
         }
+        
 
         h1 {
             color: #333;
             margin-bottom: 10px;
         }
+        
 
         .map-container {
             height: 500px;
@@ -38,11 +42,13 @@
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        
 
         #map {
             height: 100%;
             width: 100%;
         }
+        
 
         .stats-container {
             background-color: white;
@@ -54,23 +60,27 @@
             flex-wrap: wrap;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        
 
         .stat-box {
             text-align: center;
             padding: 15px;
             min-width: 200px;
         }
+        
 
         .stat-number {
             font-size: 2.5em;
             font-weight: bold;
             color: #e74c3c;
         }
+        
 
         .stat-label {
             color: #555;
             font-size: 0.9em;
         }
+        
 
         .search-container {
             margin-bottom: 20px;
@@ -78,6 +88,7 @@
             justify-content: space-between;
             align-items: center;
         }
+        
 
         #searchInput {
             padding: 10px;
@@ -86,6 +97,7 @@
             border-radius: 4px;
             font-size: 16px;
         }
+        
 
         .add-incident-btn {
             background-color: #3498db;
@@ -97,11 +109,13 @@
             font-size: 16px;
             transition: background-color 0.3s;
         }
+        
 
         .add-incident-btn:hover,
         .advanced-search-btn:hover {
             background-color: #2980b9;
         }
+        
 
         .advanced-search-btn {
             background-color: #3498db;
@@ -114,6 +128,7 @@
             transition: background-color 0.3s;
             margin-right: 10px;
         }
+        
 
         .advanced-search-panel {
             display: none;
@@ -123,6 +138,7 @@
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        
 
         .advanced-search-header {
             display: flex;
@@ -130,11 +146,13 @@
             align-items: center;
             margin-bottom: 15px;
         }
+        
 
         .advanced-search-header h3 {
             margin: 0;
             color: #333;
         }
+        
 
         .close-btn {
             background: none;
@@ -143,10 +161,12 @@
             cursor: pointer;
             color: #777;
         }
+        
 
         .search-group {
             margin-bottom: 15px;
         }
+        
 
         .search-group label {
             display: block;
@@ -154,6 +174,7 @@
             font-weight: bold;
             color: #555;
         }
+        
 
         .date-range-container,
         .fatality-range-container {
@@ -161,11 +182,13 @@
             align-items: center;
             gap: 10px;
         }
+        
 
         .date-range-container span,
         .fatality-range-container span {
             color: #777;
         }
+        
 
         .search-group input[type="date"],
         .search-group input[type="number"],
@@ -176,6 +199,7 @@
             font-size: 14px;
             flex-grow: 1;
         }
+        
 
         .search-buttons {
             display: flex;
@@ -183,6 +207,7 @@
             gap: 10px;
             margin-top: 20px;
         }
+        
 
         .search-btn {
             background-color: #3498db;
@@ -193,6 +218,7 @@
             cursor: pointer;
             font-size: 14px;
         }
+        
 
         .reset-btn {
             background-color: #95a5a6;
@@ -203,6 +229,7 @@
             cursor: pointer;
             font-size: 14px;
         }
+        
 
         .active-filters {
             display: flex;
@@ -210,6 +237,7 @@
             gap: 10px;
             margin-bottom: 15px;
         }
+        
 
         .filter-tag {
             display: inline-flex;
@@ -220,6 +248,7 @@
             font-size: 13px;
             color: #3498db;
         }
+        
 
         .filter-tag .remove-filter {
             background: none;
@@ -229,6 +258,7 @@
             cursor: pointer;
             font-weight: bold;
         }
+        
 
         .dam-list {
             background-color: white;
@@ -238,6 +268,7 @@
             overflow-y: auto;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        
 
         .dam-item {
             padding: 15px;
@@ -245,42 +276,50 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
+        
 
         .dam-item:hover {
             background-color: #f9f9f9;
         }
+        
 
         .dam-name {
             font-weight: bold;
             font-size: 1.1em;
             margin-bottom: 5px;
         }
+        
 
         .dam-location {
             color: #555;
             font-size: 0.9em;
             margin-bottom: 5px;
         }
+        
 
         .dam-fatalities {
             color: #e74c3c;
             font-weight: bold;
         }
+        
 
         .marker-popup img {
             max-width: 100%;
             margin-bottom: 10px;
             border-radius: 4px;
         }
+        
 
         .incidents-list {
             margin-top: 10px;
             padding-left: 20px;
         }
+        
 
         .incident-item {
             margin-bottom: 5px;
         }
+        
 
         footer {
             text-align: center;
@@ -289,6 +328,7 @@
             font-size: 0.9em;
             color: #777;
         }
+        
 
         .loading {
             position: fixed;
@@ -302,11 +342,13 @@
             align-items: center;
             z-index: 1000;
         }
+        
 
         .loading-text {
             font-size: 1.5em;
             color: #333;
         }
+        
 
         /* New styles for expandable incidents */
         .dam-incidents-container {
@@ -316,10 +358,12 @@
             border-radius: 4px;
             margin-top: 10px;
         }
+        
 
         .dam-incidents-container.visible {
             display: block;
         }
+        
 
         .incident-card {
             background-color: white;
@@ -328,23 +372,27 @@
             margin-bottom: 10px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
+        
 
         .incident-date {
             font-weight: bold;
             color: #333;
             margin-bottom: 5px;
         }
+        
 
         .incident-description {
             margin-bottom: 8px;
             line-height: 1.4;
         }
+        
 
         .incident-fatalities {
             color: #e74c3c;
             font-weight: bold;
             margin-bottom: 8px;
         }
+        
 
         .documentation-links {
             display: flex;
@@ -352,6 +400,7 @@
             gap: 10px;
             margin-top: 8px;
         }
+        
 
         .doc-link {
             display: inline-flex;
@@ -364,36 +413,43 @@
             color: #3498db;
             transition: background-color 0.2s;
         }
+        
 
         .doc-link:hover {
             background-color: #e0e0e0;
         }
+        
 
         .doc-link svg {
             margin-right: 5px;
         }
+        
 
         .incident-header {
             font-weight: bold;
             margin-bottom: 10px;
             color: #333;
         }
+        
 
         .toggle-indicator {
             display: inline-block;
             margin-left: 5px;
             transition: transform 0.2s;
         }
+        
 
         .toggle-indicator.open {
             transform: rotate(180deg);
         }
+        
 
         .dam-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        
 
         .no-incidents {
             font-style: italic;
@@ -401,21 +457,25 @@
             text-align: center;
             padding: 10px;
         }
+        
 
         @media (max-width: 768px) {
             .map-container {
                 height: 350px;
             }
+            
 
             .search-container {
                 flex-direction: column;
                 gap: 10px;
             }
+            
 
             #searchInput {
                 width: 100%;
                 margin-bottom: 10px;
             }
+            
 
             .add-incident-btn {
                 width: 100%;
@@ -465,6 +525,7 @@
         <button class="advanced-search-btn" id="advancedSearchBtn">Advanced Search</button>
         <button class="add-incident-btn" onclick="openReportForm()">Report Incident</button>
     </div>
+    
 
     <div class="advanced-search-panel" id="advancedSearchPanel">
         <div class="advanced-search-header">
@@ -514,18 +575,21 @@
 
     <script>
         // Using a clean architecture approach with modular design patterns
+        
 
         // -------------------- DATA LAYER --------------------
         const DataService = (function() {
             // Private variables
             let damData = [];
             const DATA_URL = "https://script.google.com/macros/s/AKfycbwdA7zSg1UWuDZ0AJyLS4YRPfBnXzVyDnT_cDW-je9prTChxPr3Cqq9P03i6KAWGH3Azg/exec";
+            
 
             // Private methods
             async function fetchData() {
                 try {
                     const response = await fetch(DATA_URL);
                     const json = await response.json();
+                    
 
                     // Process each dam to sort incidents by date (newest first)
                     json.dams.forEach(dam => {
@@ -538,6 +602,7 @@
                             });
                         }
                     });
+                    
 
                     return json.dams;
                 } catch (error) {
@@ -545,34 +610,40 @@
                     throw new Error("Failed to fetch dam data");
                 }
             }
+            
 
             // Helper function to parse date strings of various formats
             function parseDateString(dateStr) {
                 // Try to handle various date formats
                 if (!dateStr) return new Date(0); // Default to ancient date if missing
+                
 
                 // Handle MM/DD/YYYY or MM-DD-YYYY
                 const usMatch = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
                 if (usMatch) {
                     return new Date(`${usMatch[3]}-${usMatch[1].padStart(2, '0')}-${usMatch[2].padStart(2, '0')}`);
                 }
+                
 
                 // Handle YYYY-MM-DD (ISO)
                 const isoMatch = dateStr.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
                 if (isoMatch) {
                     return new Date(dateStr);
                 }
+                
 
                 // Try to parse directly (for "Month Day, Year" format)
                 const date = new Date(dateStr);
                 if (!isNaN(date.getTime())) {
                     return date;
                 }
+                
 
                 // Default if nothing works
                 console.warn(`Could not parse date: ${dateStr}`);
                 return new Date(0);
             }
+            
 
             // Extract date parts for filtering
             function extractDateParts(dateStr) {
@@ -583,6 +654,7 @@
                     day: date.getDate()
                 };
             }
+            
 
             // Public API
             return {
@@ -590,14 +662,17 @@
                     damData = await fetchData();
                     return damData;
                 },
+                
 
                 getData: function() {
                     return damData;
                 },
+                
 
                 getDamById: function(id) {
                     return damData.find(dam => dam.id === id);
                 },
+                
 
                 getSortedDams: function(sortBy = 'fatalities', order = 'desc') {
                     return [...damData].sort((a, b) => {
@@ -608,6 +683,7 @@
                         }
                     });
                 },
+                
 
                 searchDams: function(criteria) {
                     return damData.filter(dam => {
@@ -617,6 +693,7 @@
                             const nameMatch = dam.name.toLowerCase().includes(searchTerm);
                             const locationMatch = dam.location.toLowerCase().includes(searchTerm);
                             const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+                            
 
                             // Check incidents descriptions
                             let descriptionMatch = false;
@@ -625,21 +702,25 @@
                                     incident.description && incident.description.toLowerCase().includes(searchTerm)
                                 );
                             }
+                            
 
                             if (!(nameMatch || locationMatch || countyMatch || descriptionMatch)) {
                                 return false;
                             }
                         }
+                        
 
                         // Fatality count range search
                         if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
                             const minFatalities = criteria.minFatalities !== undefined ? parseInt(criteria.minFatalities) : 0;
                             const maxFatalities = criteria.maxFatalities !== undefined ? parseInt(criteria.maxFatalities) : Infinity;
+                            
 
                             if (dam.fatalities < minFatalities || dam.fatalities > maxFatalities) {
                                 return false;
                             }
                         }
+                        
 
                         // Date range search - check if any incident falls within the range
                         if (criteria.startDate || criteria.endDate) {
@@ -647,25 +728,30 @@
                             if (!dam.incidents || dam.incidents.length === 0) {
                                 return false;
                             }
+                            
 
                             const startDate = criteria.startDate ? new Date(criteria.startDate) : new Date(0);
                             const endDate = criteria.endDate ? new Date(criteria.endDate) : new Date(9999, 11, 31);
+                            
 
                             // Check if at least one incident falls within the date range
                             const hasIncidentInRange = dam.incidents.some(incident => {
                                 const incidentDate = parseDateString(incident.date);
                                 return incidentDate >= startDate && incidentDate <= endDate;
                             });
+                            
 
                             if (!hasIncidentInRange) {
                                 return false;
                             }
                         }
+                        
 
                         // If passed all filters
                         return true;
                     });
                 },
+                
 
                 // Utility function exposed for date parsing elsewhere
                 parseDateString: parseDateString
@@ -686,6 +772,7 @@
                 maxFatalities: document.getElementById('maxFatalities'),
                 siteWithMostFatalities: document.getElementById('siteWithMostFatalities'),
                 avgFatalitiesPerSite: document.getElementById('avgFatalitiesPerSite'),
+                
 
                 // Advanced search elements
                 advancedSearchBtn: document.getElementById('advancedSearchBtn'),
@@ -700,16 +787,19 @@
                 resetAdvancedSearch: document.getElementById('resetAdvancedSearch'),
                 activeFilters: document.getElementById('activeFilters')
             };
+            
 
             // Private methods
             function createDamListItem(dam) {
                 const damItem = document.createElement('div');
                 damItem.className = 'dam-item';
                 damItem.dataset.damId = dam.id;
+                
 
                 // Create dam header with name, location and toggle button
                 const damHeader = document.createElement('div');
                 damHeader.className = 'dam-header';
+                
 
                 const damInfo = document.createElement('div');
                 damInfo.innerHTML = `
@@ -717,10 +807,12 @@
                     <div class="dam-location">${dam.location}${dam.county ? ' - ' + dam.county : ''}</div>
                     <div class="dam-fatalities">${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
                 `;
+                
 
                 const toggleIndicator = document.createElement('span');
                 toggleIndicator.className = 'toggle-indicator';
                 toggleIndicator.innerHTML = '▼';
+                
 
                 damHeader.appendChild(damInfo);
                 damHeader.appendChild(toggleIndicator);
@@ -730,21 +822,32 @@
                 if (dam.imageUrl) {
                     const image = document.createElement('img');
                     image.src = `docs/assets/images/${dam.imageUrl}`;
+                    image.alt = `${dam.name} photo`;
                     image.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
                     damItem.appendChild(image);
                 }
 
+                
 
                 // Create incidents container (initially hidden)
                 const incidentsContainer = document.createElement('div');
                 incidentsContainer.className = 'dam-incidents-container';
 
+                // Add photo at the top of incidents container
+                if (dam.imageUrl) {
+                    const image = document.createElement('img');
+                    image.src = `docs/assets/images/${dam.imageUrl}`;
+                    image.alt = `${dam.name} photo`;
+                    image.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
+                    damItem.appendChild(image);
+                
                 // Add incident cards if there are any
                 if (dam.incidents && dam.incidents.length > 0) {
                     const incidentHeader = document.createElement('div');
                     incidentHeader.className = 'incident-header';
                     incidentHeader.textContent = `Incident History (${dam.incidents.length} ${dam.incidents.length === 1 ? 'incident' : 'incidents'})`;
                     incidentsContainer.appendChild(incidentHeader);
+                    
 
                     dam.incidents.forEach(incident => {
                         const incidentCard = createIncidentCard(incident);
@@ -756,17 +859,21 @@
                     noIncidents.textContent = 'No incident details available.';
                     incidentsContainer.appendChild(noIncidents);
                 }
+                
 
                 damItem.appendChild(incidentsContainer);
+                
 
                 // Add click event for toggling incidents
                 damHeader.addEventListener('click', function(e) {
                     e.stopPropagation();
                     toggleIncidents(incidentsContainer, toggleIndicator);
                 });
+                
 
                 return damItem;
             }
+            
 
            function createIncidentCard(incident) {
     const card = document.createElement('div');
@@ -778,6 +885,14 @@
         <div class="incident-description">${incident.description}</div>
     `;
 
+    // Append image if available
+    if (incident.image) {
+        const imagePath = `docs/assets/images/${incident.image}`;
+        cardHtml += `
+            <div class="incident-image">
+                <img src="${imagePath}" alt="Incident photo" style="max-width: 100%; border-radius: 4px; margin-bottom: 10px;">
+            </div>
+        `;
     }
 
     // Documentation links (if any)
@@ -818,9 +933,11 @@
     return card;
 }
 
+            
 
             function toggleIncidents(container, indicator) {
                 const isVisible = container.classList.toggle('visible');
+                
 
                 if (isVisible) {
                     indicator.classList.add('open');
@@ -830,46 +947,58 @@
                     indicator.innerHTML = '▼';
                 }
             }
+            
 
             function createPopupContent(dam) {
                 let content = `<div class="marker-popup">
                     <h3>${dam.name}</h3>`;
+                    
 
                 if (dam.imageUrl) {
-                    content += `<img src="docs/assets/images/${dam.imageUrl}">`;
+                    content += `<img src="${dam.imageUrl}" alt="${dam.name}">`;
+                    content += `<img src="docs/assets/images/${dam.imageUrl}"  alt="${dam.name}">`;
                 }
+                
 
                 content += `
                     <p><strong>Location:</strong> ${dam.location}</p>`;
+                    
 
                 if (dam.county) {
                     content += `<p><strong>County:</strong> ${dam.county}</p>`;
                 }
+                
 
                 content += `
                     <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
                     <button onclick="AppController.showDamDetails(${dam.id})" style="background-color: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">View Incidents</button>
                 </div>`;
+                
 
                 return content;
             }
+            
 
             // Public API
             return {
                 getDOMElements: function() {
                     return DOMElements;
                 },
+                
 
                 populateDamList: function(dams) {
                     DOMElements.damList.innerHTML = '';
+                    
 
                     dams.forEach(dam => {
                         const damItem = createDamListItem(dam);
                         DOMElements.damList.appendChild(damItem);
                     });
                 },
+                
 
                 createPopupContent: createPopupContent,
+                
 
                 updateStatistics: function(stats) {
                     DOMElements.totalFatalities.textContent = stats.totalFatalities;
@@ -878,20 +1007,25 @@
                     DOMElements.siteWithMostFatalities.textContent = stats.siteWithMostFatalities;
                     DOMElements.avgFatalitiesPerSite.textContent = stats.avgFatalitiesPerSite;
                 },
+                
 
                 highlightDamInList: function(damId) {
                     const listItems = document.querySelectorAll('.dam-item');
+                    
 
                     listItems.forEach(item => {
                         item.style.backgroundColor = '';
+                        
 
                         if (parseInt(item.dataset.damId) === damId) {
                             item.style.backgroundColor = '#e3f2fd';
                             item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
 
                             // Find and expand the incidents container
                             const incidentsContainer = item.querySelector('.dam-incidents-container');
                             const toggleIndicator = item.querySelector('.toggle-indicator');
+                            
 
                             if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
                                 toggleIncidents(incidentsContainer, toggleIndicator);
@@ -899,14 +1033,17 @@
                         }
                     });
                 },
+                
 
                 hideLoading: function() {
                     DOMElements.loading.style.display = 'none';
                 },
+                
 
                 updateLastUpdated: function() {
                     DOMElements.lastUpdated.textContent = new Date().toLocaleDateString();
                 },
+                
 
                 showError: function(message) {
                     alert(message);
@@ -919,43 +1056,52 @@
             // Private variables
             let map;
             let markers = [];
+            
 
             // Public API
             return {
                 initialize: function(mapElement) {
                     // Center the map on the US
                     map = L.map(mapElement).setView([39.8283, -98.5795], 4);
+                    
 
                     // Add the tile layer (OpenStreetMap)
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     }).addTo(map);
+                    
 
                     return map;
                 },
+                
 
                 addMarkers: function(dams, popupContentCallback, markerClickCallback) {
                     // Clear any existing markers
                     markers.forEach(marker => marker.remove());
                     markers = [];
+                    
 
                     // Add markers for each dam
                     dams.forEach(dam => {
                         const marker = L.marker([dam.latitude, dam.longitude])
                             .addTo(map)
                             .bindPopup(popupContentCallback(dam));
+                        
 
                         marker.damId = dam.id;
                         markers.push(marker);
+                        
 
                         // Event listener for popup open
                         marker.on('click', function() {
                             markerClickCallback(dam.id);
                         });
                     });
+                    
 
                     return markers;
                 },
+                
 
                 filterMarkers: function(visibleDamIds) {
                     markers.forEach(marker => {
@@ -968,11 +1114,13 @@
                         }
                     });
                 },
+                
 
                 focusOnDam: function(damId, zoomLevel = 12) {
                     const dam = DataService.getDamById(damId);
                     if (dam) {
                         map.setView([dam.latitude, dam.longitude], zoomLevel);
+                        
 
                         // Find and open marker popup
                         const marker = markers.find(m => m.damId === damId);
@@ -981,14 +1129,17 @@
                         }
                     }
                 },
+                
 
                 getMap: function() {
                     return map;
                 },
+                
 
                 getMarkers: function() {
                     return markers;
                 },
+                
 
                 updateMarkerPopup: function(damId, content) {
                     const marker = markers.find(m => m.damId === damId);
@@ -1006,6 +1157,7 @@
         const AppController = (function(dataService, uiCtrl, mapCtrl) {
             // Private variables
             const DOM = uiCtrl.getDOMElements();
+            
 
             // Private methods
             function setupEventListeners() {
@@ -1014,43 +1166,52 @@
                     const searchTerm = this.value.toLowerCase();
                     performSearch({ text: searchTerm });
                 });
+                
 
                 // Advanced search toggle
                 DOM.advancedSearchBtn.addEventListener('click', function() {
                     DOM.advancedSearchPanel.style.display = DOM.advancedSearchPanel.style.display === 'block' ? 'none' : 'block';
                 });
+                
 
                 // Close advanced search
                 DOM.closeAdvancedSearch.addEventListener('click', function() {
                     DOM.advancedSearchPanel.style.display = 'none';
                 });
+                
 
                 // Apply advanced search filters
                 DOM.applyAdvancedSearch.addEventListener('click', function() {
                     applyAdvancedSearch();
                 });
+                
 
                 // Reset advanced search filters
                 DOM.resetAdvancedSearch.addEventListener('click', function() {
                     resetAdvancedSearch();
                 });
             }
+            
 
             // Perform search based on search criteria
             function performSearch(criteria) {
                 // Apply search
                 const filteredDams = dataService.searchDams(criteria);
+                
 
                 // Update UI with filtered dams
                 uiCtrl.populateDamList(filteredDams);
+                
 
                 // Update map markers
                 const visibleDamIds = filteredDams.map(dam => dam.id);
                 mapCtrl.filterMarkers(visibleDamIds);
+                
 
                 // Update active filters display
                 updateActiveFilters(criteria);
             }
+            
 
             // Apply advanced search filters
             function applyAdvancedSearch() {
@@ -1062,6 +1223,7 @@
                     maxFatalities: DOM.fatalityMax.value || undefined,
                     keywords: DOM.keywordSearch.value || undefined
                 };
+                
 
                 // Combine keyword search with text search
                 if (criteria.keywords) {
@@ -1069,12 +1231,15 @@
                         `${criteria.text} ${criteria.keywords}` : 
                         criteria.keywords;
                 }
+                
 
                 performSearch(criteria);
+                
 
                 // Hide the advanced search panel
                 DOM.advancedSearchPanel.style.display = 'none';
             }
+            
 
             // Reset advanced search filters
             function resetAdvancedSearch() {
@@ -1084,14 +1249,17 @@
                 DOM.fatalityMin.value = '';
                 DOM.fatalityMax.value = '';
                 DOM.keywordSearch.value = '';
+                
 
                 // Reset to basic search only
                 performSearch({ text: DOM.searchInput.value.toLowerCase() });
             }
+            
 
             // Update active filters display
             function updateActiveFilters(criteria) {
                 DOM.activeFilters.innerHTML = '';
+                
 
                 // Date range filter
                 if (criteria.startDate || criteria.endDate) {
@@ -1100,6 +1268,7 @@
                         criteria.startDate ?
                             `Date: After ${formatDate(criteria.startDate)}` :
                             `Date: Before ${formatDate(criteria.endDate)}`;
+                    
 
                     addFilterTag(dateLabel, function() {
                         DOM.incidentStartDate.value = '';
@@ -1107,6 +1276,7 @@
                         applyAdvancedSearch();
                     });
                 }
+                
 
                 // Fatality range filter
                 if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
@@ -1115,6 +1285,7 @@
                         criteria.minFatalities !== undefined ?
                             `Fatalities: Min ${criteria.minFatalities}` :
                             `Fatalities: Max ${criteria.maxFatalities}`;
+                    
 
                     addFilterTag(fatalityLabel, function() {
                         DOM.fatalityMin.value = '';
@@ -1122,6 +1293,7 @@
                         applyAdvancedSearch();
                     });
                 }
+                
 
                 // Keyword filter (only if different from search input)
                 if (criteria.keywords && criteria.keywords !== criteria.text) {
@@ -1131,6 +1303,7 @@
                     });
                 }
             }
+            
 
             // Helper function to add a filter tag
             function addFilterTag(label, removeCallback) {
@@ -1140,40 +1313,49 @@
                     ${label}
                     <button class="remove-filter">×</button>
                 `;
+                
 
                 // Add remove filter event
                 tag.querySelector('.remove-filter').addEventListener('click', removeCallback);
+                
 
                 DOM.activeFilters.appendChild(tag);
             }
+            
 
             // Format date for display
             function formatDate(dateStr) {
                 const date = new Date(dateStr);
                 return date.toLocaleDateString();
             }
+            
 
             function calculateStatistics() {
                 const dams = dataService.getData();
                 let totalFatalities = 0;
                 let mostDangerousDam = { name: '', fatalities: 0 };
                 let damsWithFatalities = 0;
+                
 
                 dams.forEach(dam => {
                     totalFatalities += dam.fatalities;
+                    
 
                     if (dam.fatalities > 0) {
                         damsWithFatalities++;
                     }
+                    
 
                     if (dam.fatalities > mostDangerousDam.fatalities) {
                         mostDangerousDam = { name: dam.name, fatalities: dam.fatalities };
                     }
                 });
+                
 
                 // Calculate average fatalities per site (only for sites with fatalities)
                 const avgFatalitiesPerSite = damsWithFatalities > 0 ? 
                     (totalFatalities / damsWithFatalities).toFixed(1) : 0;
+                
 
                 return {
                     totalFatalities,
@@ -1183,6 +1365,7 @@
                     avgFatalitiesPerSite
                 };
             }
+            
 
             // Public API
             return {
@@ -1190,9 +1373,11 @@
                     try {
                         // Initialize data
                         await dataService.initialize();
+                        
 
                         // Initialize map
                         mapCtrl.initialize(DOM.map);
+                        
 
                         // Add markers to map
                         mapCtrl.addMarkers(
@@ -1200,17 +1385,21 @@
                             uiCtrl.createPopupContent,
                             this.highlightDam
                         );
+                        
 
                         // Calculate and display statistics
                         const stats = calculateStatistics();
                         uiCtrl.updateStatistics(stats);
+                        
 
                         // Populate dam list with sorted dams
                         const sortedDams = dataService.getSortedDams();
                         uiCtrl.populateDamList(sortedDams);
+                        
 
                         // Setup event listeners
                         setupEventListeners();
+                        
 
                         // Update UI state
                         uiCtrl.hideLoading();
@@ -1220,14 +1409,17 @@
                         uiCtrl.showError("There was an error loading the data. Please try again later.");
                     }
                 },
+                
 
                 highlightDam: function(damId) {
                     uiCtrl.highlightDamInList(damId);
                 },
+                
 
                 showDamDetails: function(damId) {
                     // Focus map on the dam
                     mapCtrl.focusOnDam(damId);
+                    
 
                     // Highlight and scroll to the dam in the list
                     uiCtrl.highlightDamInList(damId);
@@ -1237,12 +1429,14 @@
 
         // Make AppController globally accessible for the "View Incidents" button in popups
         window.AppController = AppController;
+        
 
         // Open the Google Form for reporting incidents
         function openReportForm() {
             // Replace with your actual Google Form URL
             window.open('https://docs.google.com/forms/d/e/1FAIpQLSfuBcrTwOhsHVn6hPtdDmvcEXAMU2a8Sozux8hXwc8tXETUIA/viewform?usp=dialog', '_blank');
         }
+        
 
         // Initialize when the page loads
         window.addEventListener('load', function() {

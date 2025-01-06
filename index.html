@@ -952,31 +952,32 @@
             function createPopupContent(dam) {
                 let content = `<div class="marker-popup">
                     <h3>${dam.name}</h3>`;
+                    
 
-                // Only include the image if one exists
                 if (dam.imageUrl) {
-                    content += `<img src="docs/assets/images/${dam.imageUrl}" style="max-width: 100%; border-radius: 6px; margin-bottom: 10px;">`;
+                    content += `<img src="docs/assets/images/${dam.imageUrl}">`;
+                    content += `<img src="${dam.imageUrl}" alt="${dam.name}">`;
+                    content += `<img src="docs/assets/images/${dam.imageUrl}"  alt="${dam.name}">`;
                 }
+                
 
                 content += `
                     <p><strong>Location:</strong> ${dam.location}</p>`;
+                    
 
                 if (dam.county) {
                     content += `<p><strong>County:</strong> ${dam.county}</p>`;
                 }
+                
 
                 content += `
                     <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
-                    <button onclick="AppController.showDamDetails(${dam.id})"
-                        style="background-color: #3498db; color: white; border: none;
-                        padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">
-                        View Incidents
-                    </button>
+                    <button onclick="AppController.showDamDetails(${dam.id})" style="background-color: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">View Incidents</button>
                 </div>`;
+                
 
                 return content;
             }
-
             
 
             // Public API

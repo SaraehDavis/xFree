@@ -818,21 +818,6 @@
                 damHeader.appendChild(toggleIndicator);
                 damItem.appendChild(damHeader);
 
-                // Create photo element if photo exists
-                if (dam.imageUrl) {
-                    const image = document.createElement('img');
-                    image.src = `docs/assets/images/${dam.imageUrl}`;
-                    image.alt = `${dam.name} photo`;
-                    image.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
-                    damItem.appendChild(image);
-                }
-
-                
-
-                // Create incidents container (initially hidden)
-                const incidentsContainer = document.createElement('div');
-                incidentsContainer.className = 'dam-incidents-container';
-
                 // Add photo at the top of incidents container
                 if (dam.imageUrl) {
                     const image = document.createElement('img');
@@ -840,6 +825,14 @@
                     image.alt = `${dam.name} photo`;
                     image.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
                     damItem.appendChild(image);
+
+                }
+
+                
+
+                // Create incidents container (initially hidden)
+                const incidentsContainer = document.createElement('div');
+                incidentsContainer.className = 'dam-incidents-container';
                 
                 // Add incident cards if there are any
                 if (dam.incidents && dam.incidents.length > 0) {

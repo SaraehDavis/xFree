@@ -726,16 +726,6 @@
                 damHeader.appendChild(toggleIndicator);
                 damItem.appendChild(damHeader);
 
-                // Create photo element if photo exists
-                if (dam.imageUrl) {
-                    const image = document.createElement('img');
-                    image.src = `docs/assets/images/${dam.imageUrl}`;
-                    image.alt = `${dam.name} photo`;
-                    image.style.cssText = 'max-width: 100%; margin-top: 10px; border-radius: 6px;';
-                    damItem.appendChild(image);
-                }
-
-
                 // Create incidents container (initially hidden)
                 const incidentsContainer = document.createElement('div');
                 incidentsContainer.className = 'dam-incidents-container';
@@ -764,6 +754,14 @@
                 damHeader.addEventListener('click', function(e) {
                     e.stopPropagation();
                     toggleIncidents(incidentsContainer, toggleIndicator);
+                // Lazy-load dam image when expanded
+                    if (dam.imageUrl && !damItem.querySelector('.dam-image')) {
+                        const image = document.createElement('img');
+                        image.src = `docs/assets/images/${dam.imageUrl}`;
+                        image.className = 'dam-image';
+                        image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                        damItem.insertBefore(image, incidentsContainer);
+                    
                 });
 
                 return damItem;

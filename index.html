@@ -753,15 +753,16 @@
                 // Add click event for toggling incidents
                 damHeader.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    toggleIncidents(incidentsContainer, toggleIndicator);
-                // Lazy-load dam image when expanded
-                    if (dam.imageUrl && !damItem.querySelector('.dam-image')) {
+                    const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
+                
+                    // Lazy-load image ONLY after expand
+                    if (isVisible && dam.imageUrl && !damItem.querySelector('.dam-image')) {
                         const image = document.createElement('img');
                         image.src = `docs/assets/images/${dam.imageUrl}`;
                         image.className = 'dam-image';
                         image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
                         damItem.insertBefore(image, incidentsContainer);
-                    
+                    }
                 });
 
                 return damItem;
@@ -836,6 +837,7 @@
                     indicator.classList.remove('open');
                     indicator.innerHTML = '▼';
                 }
+                return isVisible;
             }
 
             function createPopupContent(dam) {
@@ -843,9 +845,9 @@
                     <h3>${dam.name}</h3>`;
 
                 if (dam.imageUrl) {
-                    content += `<img src="${dam.imageUrl}" alt="${dam.name}">`;
-                    content += `<img src="docs/assets/images/${dam.imageUrl}"  alt="${dam.name}">`;
+                    content += `<div class="popup-image" id="popup-image-${dam.id}"></div>`;
                 }
+
 
                 content += `
                     <p><strong>Location:</strong> ${dam.location}</p>`;
@@ -959,7 +961,19 @@
                         // Event listener for popup open
                         marker.on('click', function() {
                             markerClickCallback(dam.id);
+                        
+                            // Lazy-load dam image into popup after it opens
+                            setTimeout(() => {
+                                const container = document.getElementById(`popup-image-${dam.id}`);
+                                if (container && dam.imageUrl && container.childNodes.length === 0) {
+                                    const img = document.createElement('img');
+                                    img.src = `docs/assets/images/${dam.imageUrl}`;
+                                    img.style.cssText = 'max-width: 100%; border-radius: 4px; margin-bottom: 10px;';
+                                    container.appendChild(img);
+                                }
+                            }, 150); // Small delay to ensure DOM is ready
                         });
+
                     });
 
                     return markers;

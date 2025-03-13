@@ -507,6 +507,8 @@
         <!-- Dam list items will be populated here -->
     </div>
 
+    <div id="paginationControls" style="text-align:center; margin-top: 20px;"></div>
+
     <footer>
         <p>The Low Head Dam Fatalities Tracker is a public service project to raise awareness about the dangers of low head dams.</p>
         <p>Data last updated: <span id="lastUpdated">Loading...</span></p>
@@ -1024,6 +1026,77 @@
             };
         })();
 
+        // -------------------- PAGINATION SUPPORT --------------------
+        const PaginationController = (function() {
+            const PAGE_SIZE = 20;
+            let currentPage = 1;
+            let filteredDams = [];
+        
+            function getPaginatedDams() {
+                const start = (currentPage - 1) * PAGE_SIZE;
+                const end = start + PAGE_SIZE;
+                return filteredDams.slice(start, end);
+            }
+        
+            function updatePageDisplay(uiCtrl) {
+                const damList = getPaginatedDams();
+                uiCtrl.populateDamList(damList);
+                renderPaginationControls();
+            }
+        
+            function renderPaginationControls() {
+                const container = document.getElementById('paginationControls');
+                container.innerHTML = '';
+        
+                const totalPages = Math.ceil(filteredDams.length / PAGE_SIZE);
+        
+                const prevBtn = document.createElement('button');
+                prevBtn.textContent = 'Previous';
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.onclick = () => {
+                    currentPage--;
+                    updatePageDisplay(UIController);
+                };
+                container.appendChild(prevBtn);
+        
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.textContent = i;
+                    pageBtn.disabled = i === currentPage;
+                    pageBtn.onclick = () => {
+                        currentPage = i;
+                        updatePageDisplay(UIController);
+                    };
+                    container.appendChild(pageBtn);
+                }
+        
+                const nextBtn = document.createElement('button');
+                nextBtn.textContent = 'Next';
+                nextBtn.disabled = currentPage === totalPages;
+                nextBtn.onclick = () => {
+                    currentPage++;
+                    updatePageDisplay(UIController);
+                };
+                container.appendChild(nextBtn);
+        
+                const pageInfo = document.createElement('div');
+                pageInfo.style.marginTop = '10px';
+                pageInfo.textContent = `Showing page ${currentPage} of ${totalPages}`;
+                container.appendChild(pageInfo);
+            }
+        
+            return {
+                setFilteredDams: function(dams) {
+                    filteredDams = dams;
+                    currentPage = 1;
+                    updatePageDisplay(UIController);
+                },
+                refresh: function() {
+                    updatePageDisplay(UIController);
+                }
+            };
+        })();
+
         // -------------------- APP CONTROLLER (MAIN) --------------------
         const AppController = (function(dataService, uiCtrl, mapCtrl) {
             // Private variables
@@ -1064,7 +1137,8 @@
                 const filteredDams = dataService.searchDams(criteria);
 
                 // Update UI with filtered dams
-                uiCtrl.populateDamList(filteredDams);
+                PaginationController.setFilteredDams(filteredDams);
+
 
                 // Update map markers
                 const visibleDamIds = filteredDams.map(dam => dam.id);
@@ -1229,7 +1303,7 @@
 
                         // Populate dam list with sorted dams
                         const sortedDams = dataService.getSortedDams();
-                        uiCtrl.populateDamList(sortedDams);
+                        PaginationController.setFilteredDams(sortedDams);
 
                         // Setup event listeners
                         setupEventListeners();

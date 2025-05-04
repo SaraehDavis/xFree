@@ -1099,7 +1099,10 @@
                 for (let i = 1; i <= totalPages; i++) {
                     const pageBtn = document.createElement('button');
                     pageBtn.textContent = i;
-                    pageBtn.disabled = i === currentPage;
+                    pageBtn.className = 'pagination-btn';
+                    if (i === currentPage) {
+                        pageBtn.classList.add('active');
+                    }
                     pageBtn.onclick = () => {
                         currentPage = i;
                         updatePageDisplay(UIController);

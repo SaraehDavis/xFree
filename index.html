@@ -865,7 +865,9 @@
                 let content = `<div class="marker-popup">
                 <h3>${dam.name}</h3>`;
                 if (dam.imageUrl) {
-                    content += `<div class="popup-image" id="popup-image-${dam.id}"></div>`;
+                    content += `<div class="popup-image">
+                    <img src="docs/assets/images/${dam.imageUrl}" alt="Dam photo" style="max-width: 100%; border-radius: 4px; margin-bottom: 10px;">
+                    </div>`;
                 }
                 content += `
                 <p><strong>Location:</strong> ${dam.location}</p>`;
@@ -878,6 +880,7 @@
                 </div>`;
                 return content;
             }
+
 
 
             // Public API

@@ -745,37 +745,30 @@
                 const damItem = document.createElement('div');
                 damItem.className = 'dam-item';
                 damItem.dataset.damId = dam.id;
-
                 // Create dam header with name, location and toggle button
                 const damHeader = document.createElement('div');
                 damHeader.className = 'dam-header';
-
                 const damInfo = document.createElement('div');
                 damInfo.innerHTML = `
                     <div class="dam-name">${dam.name}</div>
                     <div class="dam-location">${dam.location}${dam.county ? ' - ' + dam.county : ''}</div>
                     <div class="dam-fatalities">${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
                 `;
-
                 const toggleIndicator = document.createElement('span');
                 toggleIndicator.className = 'toggle-indicator';
                 toggleIndicator.innerHTML = '▼';
-
                 damHeader.appendChild(damInfo);
                 damHeader.appendChild(toggleIndicator);
                 damItem.appendChild(damHeader);
-
                 // Create incidents container (initially hidden)
                 const incidentsContainer = document.createElement('div');
                 incidentsContainer.className = 'dam-incidents-container';
-
                 // Add incident cards if there are any
                 if (dam.incidents && dam.incidents.length > 0) {
                     const incidentHeader = document.createElement('div');
                     incidentHeader.className = 'incident-header';
                     incidentHeader.textContent = `Incident History (${dam.incidents.length} ${dam.incidents.length === 1 ? 'incident' : 'incidents'})`;
                     incidentsContainer.appendChild(incidentHeader);
-
                     dam.incidents.forEach(incident => {
                         const incidentCard = createIncidentCard(incident);
                         incidentsContainer.appendChild(incidentCard);
@@ -786,25 +779,32 @@
                     noIncidents.textContent = 'No incident details available.';
                     incidentsContainer.appendChild(noIncidents);
                 }
-
                 damItem.appendChild(incidentsContainer);
-
                 // Add click event for toggling incidents
                 damHeader.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
-
-                    // Lazy-load image ONLY after expand
-                    if (isVisible && dam.imageUrl && !damItem.querySelector('.dam-image')) {
-                        const image = document.createElement('img');
-                        image.src = `docs/assets/images/${dam.imageUrl}`;
-                        image.className = 'dam-image';
-                        image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
-                        damItem.insertBefore(image, incidentsContainer);
+                    
+                    // Handle the dam image
+                    if (isVisible && dam.imageUrl) {
+                        // Add image if it doesn't exist
+                        if (!damItem.querySelector('.dam-image')) {
+                            const image = document.createElement('img');
+                            image.src = `docs/assets/images/${dam.imageUrl}`;
+                            image.className = 'dam-image';
+                            image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                            damItem.insertBefore(image, incidentsContainer);
+                        }
+                    } else {
+                        // Remove image if it exists when closing
+                        const existingImage = damItem.querySelector('.dam-image');
+                        if (existingImage) {
+                            damItem.removeChild(existingImage);
+                        }
                     }
                 });
-
                 return damItem;
+            }
             }
 
             function createIncidentCard(incident) {

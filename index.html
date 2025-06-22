@@ -1346,13 +1346,36 @@
                     uiCtrl.highlightDamInList(damId);
                 },
 
-                showDamDetails: function(damId) {
-                    // Focus map on the dam
-                    mapCtrl.focusOnDam(damId);
+showDamDetails: function(damId) {
+    const allDams = DataService.getSortedDams(); // Or getData() if not sorted
+    const index = allDams.findIndex(d => d.id === damId);
+    
+    if (index === -1) return;
 
-                    // Highlight and scroll to the dam in the list
-                    uiCtrl.highlightDamInList(damId);
-                }
+    const PAGE_SIZE = 20;
+    const page = Math.floor(index / PAGE_SIZE) + 1;
+
+    // Set the current page
+    PaginationController.setFilteredDams(allDams); // Resets to page 1
+    PaginationController.refresh = function() {
+        // Override refresh temporarily to go to correct page then expand
+        const start = (page - 1) * PAGE_SIZE;
+        const pagedDams = allDams.slice(start, start + PAGE_SIZE);
+        UIController.populateDamList(pagedDams);
+
+        // Scroll to and expand dam after rendering
+        setTimeout(() => {
+            UIController.highlightDamInList(damId);
+        }, 100);
+    };
+    
+    // Trigger refresh manually to load correct page and call custom logic
+    PaginationController.refresh();
+
+    // Also zoom on the map
+    MapController.focusOnDam(damId);
+}
+
             };
         })(DataService, UIController, MapController);
 

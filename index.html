@@ -943,9 +943,23 @@
                             const incidentsContainer = item.querySelector('.dam-incidents-container');
                             const toggleIndicator = item.querySelector('.toggle-indicator');
 
-                            if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
-                                toggleIncidents(incidentsContainer, toggleIndicator);
+                        if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
+                            const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
+                        
+                            // Load dam image manually if necessary
+                            const dam = DataService.getDamById(damId);
+                            if (isVisible && dam.imageUrl) {
+                                const existingImage = item.querySelector('.dam-image');
+                                if (!existingImage) {
+                                    const image = document.createElement('img');
+                                    image.src = `docs/assets/images/${dam.imageUrl}`;
+                                    image.className = 'dam-image';
+                                    image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                                    item.insertBefore(image, incidentsContainer);
+                                }
                             }
+                        }
+
                         }
                     });
                 },

@@ -663,28 +663,62 @@
                         }
                     });
                 },
+                const stateMap = {
+                    'alabama': 'AL', 'alaska': 'AK', 'arizona': 'AZ', 'arkansas': 'AR',
+                    'california': 'CA', 'colorado': 'CO', 'connecticut': 'CT', 'delaware': 'DE',
+                    'florida': 'FL', 'georgia': 'GA', 'hawaii': 'HI', 'idaho': 'ID',
+                    'illinois': 'IL', 'indiana': 'IN', 'iowa': 'IA', 'kansas': 'KS',
+                    'kentucky': 'KY', 'louisiana': 'LA', 'maine': 'ME', 'maryland': 'MD',
+                    'massachusetts': 'MA', 'michigan': 'MI', 'minnesota': 'MN', 'mississippi': 'MS',
+                    'missouri': 'MO', 'montana': 'MT', 'nebraska': 'NE', 'nevada': 'NV',
+                    'new hampshire': 'NH', 'new jersey': 'NJ', 'new mexico': 'NM', 'new york': 'NY',
+                    'north carolina': 'NC', 'north dakota': 'ND', 'ohio': 'OH', 'oklahoma': 'OK',
+                    'oregon': 'OR', 'pennsylvania': 'PA', 'rhode island': 'RI', 'south carolina': 'SC',
+                    'south dakota': 'SD', 'tennessee': 'TN', 'texas': 'TX', 'utah': 'UT',
+                    'vermont': 'VT', 'virginia': 'VA', 'washington': 'WA', 'west virginia': 'WV',
+                    'wisconsin': 'WI', 'wyoming': 'WY'
+                };
+
+                // Create a reverse map from abbreviations to full names
+                    const reverseStateMap = Object.fromEntries(
+                    Object.entries(stateMap).map(([name, abbr]) => [abbr.toLowerCase(), name])
+                );
 
                 searchDams: function(criteria) {
                     return damData.filter(dam => {
-                        // Basic text search
-                        if (criteria.text) {
-                            const searchTerm = criteria.text.toLowerCase();
-                            const nameMatch = dam.name.toLowerCase().includes(searchTerm);
-                            const locationMatch = dam.location.toLowerCase().includes(searchTerm);
-                            const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+                if (criteria.text) {
+                    const searchTerm = criteria.text.trim().toLowerCase();
+                
+                    // Map full state names to abbreviation if needed
+                    const maybeAbbr = stateMap[searchTerm]; // e.g., "utah" => "UT"
+                    const maybeFull = reverseStateMap[searchTerm]; // e.g., "ut" => "Utah"
+                
+                    const nameMatch = dam.name.toLowerCase().includes(searchTerm);
+                    const locationMatch = dam.location.toLowerCase().includes(searchTerm);
+                    const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+                
+                    const stateMatch = (
+                        dam.state &&
+                        (
+                            dam.state.toLowerCase() === searchTerm || // Matches abbreviation
+                            dam.state.toLowerCase() === maybeAbbr?.toLowerCase() || // Full name was typed
+                            maybeFull?.toLowerCase() === dam.state.toLowerCase() // Abbreviation was typed
+                        )
+                    );
+                
+                    // Check incidents descriptions
+                    let descriptionMatch = false;
+                    if (dam.incidents && dam.incidents.length > 0) {
+                        descriptionMatch = dam.incidents.some(incident =>
+                            incident.description && incident.description.toLowerCase().includes(searchTerm)
+                        );
+                    }
+                
+                    if (!(nameMatch || locationMatch || countyMatch || stateMatch || descriptionMatch)) {
+                        return false;
+                    }
+                }
 
-                            // Check incidents descriptions
-                            let descriptionMatch = false;
-                            if (dam.incidents && dam.incidents.length > 0) {
-                                descriptionMatch = dam.incidents.some(incident => 
-                                    incident.description && incident.description.toLowerCase().includes(searchTerm)
-                                );
-                            }
-
-                            if (!(nameMatch || locationMatch || countyMatch || descriptionMatch)) {
-                                return false;
-                            }
-                        }
 
                         // Fatality count range search
                         if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {

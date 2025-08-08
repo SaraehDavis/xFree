@@ -701,7 +701,7 @@
                         dam.state &&
                         (
                             dam.state.toLowerCase() === searchTerm || // Matches abbreviation
-                            dam.state.toLowerCase() === maybeAbbr?.toLowerCase() || // Full name was typed
+                            dam.state.toUpperCase() === maybeAbbr || // Full name was typed
                             maybeFull?.toLowerCase() === dam.state.toLowerCase() // Abbreviation was typed
                         )
                     );

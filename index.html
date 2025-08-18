@@ -697,14 +697,15 @@
                     const locationMatch = dam.location.toLowerCase().includes(searchTerm);
                     const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
                 
-                    const stateMatch = (
+                   const stateMatch = (
                         dam.state &&
                         (
-                            dam.state.toLowerCase() === searchTerm || // Matches abbreviation
-                            dam.state.toUpperCase() === maybeAbbr || // Full name was typed
-                            maybeFull?.toLowerCase() === dam.state.toLowerCase() // Abbreviation was typed
+                            dam.state.toLowerCase() === searchTerm || // direct match with abbreviation
+                            dam.state.toUpperCase() === maybeAbbr ||  // match if user typed full state name
+                            maybeFull?.toLowerCase() === dam.state.toLowerCase() // match if user typed abbreviation
                         )
                     );
+
                 
                     // Check incidents descriptions
                     let descriptionMatch = false;

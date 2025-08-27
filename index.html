@@ -718,13 +718,17 @@
                     const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
                 
                    const stateMatch = (
-                        dam.state &&
-                        (
-                            dam.state.toLowerCase() === searchTerm || // direct match with abbreviation
-                            dam.state.toUpperCase() === maybeAbbr ||  // match if user typed full state name
-                            maybeFull?.toLowerCase() === dam.state.toLowerCase() // match if user typed abbreviation
-                        )
-                    );
+                        let stateMatch = false;
+                            if (dam.state) {
+                                const damStateUpper = dam.state.toUpperCase();
+                                if (
+                                    damStateUpper === searchTerm.toUpperCase() || // direct match to abbreviation
+                                    damStateUpper === (maybeAbbr || "").toUpperCase() || // full name typed
+                                    (maybeFull && maybeFull.toLowerCase() === dam.state.toLowerCase()) // abbreviation typed
+                                ) {
+                                    stateMatch = true;
+                                }
+                            }
 
                 
                     // Check incidents descriptions

@@ -704,82 +704,74 @@
                 },
 
                 searchDams: function(criteria) {
-                    return damData.filter(dam => {
-                if (criteria.text) {
-                    const searchTerm = criteria.text.trim().toLowerCase();
-                
-                    // Map full state names to abbreviation if needed
-                    
-                    const maybeAbbr = stateMap[searchTerm]; // e.g., "utah" => "UT"
-                    const maybeFull = reverseStateMap[searchTerm]; // e.g., "ut" => "Utah"
-                
-                    const nameMatch = dam.name.toLowerCase().includes(searchTerm);
-                    const locationMatch = dam.location.toLowerCase().includes(searchTerm);
-                    const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
-                
-                    let stateMatch = false;
-                    if (dam.state) {
-                        const damStateUpper = dam.state.toUpperCase();
-                        if (
-                            damStateUpper === searchTerm.toUpperCase() ||
-                            damStateUpper === (maybeAbbr || "").toUpperCase() ||
-                            (maybeFull && maybeFull.toLowerCase() === dam.state.toLowerCase())
-                        ) {
-                            stateMatch = true;
-                        }
-                    }
+    return damData.filter(dam => {
+        // Text search
+        if (criteria.text) {
+            const searchTerm = criteria.text.trim().toLowerCase();
 
+            const maybeAbbr = stateMap[searchTerm]; // e.g., "texas" => "TX"
+            const maybeFull = reverseStateMap[searchTerm]; // e.g., "tx" => "Texas"
 
-                
-                    // Check incidents descriptions
-                    let descriptionMatch = false;
-                    if (dam.incidents && dam.incidents.length > 0) {
-                        descriptionMatch = dam.incidents.some(incident =>
-                            incident.description && incident.description.toLowerCase().includes(searchTerm)
-                        );
-                    }
-                
-                    if (!(nameMatch || locationMatch || countyMatch || stateMatch || descriptionMatch)) {
-                        return false;
-                    }
+            const nameMatch = dam.name.toLowerCase().includes(searchTerm);
+            const locationMatch = dam.location.toLowerCase().includes(searchTerm);
+            const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+
+            let stateMatch = false;
+            if (dam.state) {
+                const damStateUpper = dam.state.toUpperCase();
+                if (
+                    damStateUpper === searchTerm.toUpperCase() ||
+                    damStateUpper === (maybeAbbr || "").toUpperCase() ||
+                    (maybeFull && maybeFull.toLowerCase() === dam.state.toLowerCase())
+                ) {
+                    stateMatch = true;
                 }
+            }
 
+            let descriptionMatch = false;
+            if (dam.incidents && dam.incidents.length > 0) {
+                descriptionMatch = dam.incidents.some(incident =>
+                    incident.description && incident.description.toLowerCase().includes(searchTerm)
+                );
+            }
 
-                        // Fatality count range search
-                        if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
-                            const minFatalities = criteria.minFatalities !== undefined ? parseInt(criteria.minFatalities) : 0;
-                            const maxFatalities = criteria.maxFatalities !== undefined ? parseInt(criteria.maxFatalities) : Infinity;
+            if (!(nameMatch || locationMatch || countyMatch || stateMatch || descriptionMatch)) {
+                return false;
+            }
+        }
 
-                            if (dam.fatalities < minFatalities || dam.fatalities > maxFatalities) {
-                                return false;
-                            }
-                        }
+        // Fatality count filter
+        if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
+            const minFatalities = criteria.minFatalities !== undefined ? parseInt(criteria.minFatalities) : 0;
+            const maxFatalities = criteria.maxFatalities !== undefined ? parseInt(criteria.maxFatalities) : Infinity;
 
-                        // Date range search - check if any incident falls within the range
-                        if (criteria.startDate || criteria.endDate) {
-                            // If dam has no incidents, it doesn't match date range criteria
-                            if (!dam.incidents || dam.incidents.length === 0) {
-                                return false;
-                            }
+            if (dam.fatalities < minFatalities || dam.fatalities > maxFatalities) {
+                return false;
+            }
+        }
 
-                            const startDate = criteria.startDate ? new Date(criteria.startDate) : new Date(0);
-                            const endDate = criteria.endDate ? new Date(criteria.endDate) : new Date(9999, 11, 31);
+        // Date range filter
+        if (criteria.startDate || criteria.endDate) {
+            if (!dam.incidents || dam.incidents.length === 0) {
+                return false;
+            }
 
-                            // Check if at least one incident falls within the date range
-                            const hasIncidentInRange = dam.incidents.some(incident => {
-                                const incidentDate = parseDateString(incident.date);
-                                return incidentDate >= startDate && incidentDate <= endDate;
-                            });
+            const startDate = criteria.startDate ? new Date(criteria.startDate) : new Date(0);
+            const endDate = criteria.endDate ? new Date(criteria.endDate) : new Date(9999, 11, 31);
 
-                            if (!hasIncidentInRange) {
-                                return false;
-                            }
-                        }
+            const hasIncidentInRange = dam.incidents.some(incident => {
+                const incidentDate = parseDateString(incident.date);
+                return incidentDate >= startDate && incidentDate <= endDate;
+            });
 
-                        // If passed all filters
-                        return true;
-                    });
-                },
+            if (!hasIncidentInRange) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+},
 
                 // Utility function exposed for date parsing elsewhere
                 parseDateString: parseDateString

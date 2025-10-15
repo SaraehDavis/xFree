@@ -526,62 +526,6 @@
                 </div>
             </div>
             <div class="search-group">
-            <label for="stateFilter">State:</label>
-            <select id="stateFilter">
-                <option value="">Select a state</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-            </select>
-        </div>
-            <div class="search-group">
                 <label for="keywordSearch">Keywords in Description:</label>
                 <input type="text" id="keywordSearch" placeholder="Search in incident descriptions...">
             </div>
@@ -627,7 +571,6 @@
         // Using a clean architecture approach with modular design patterns
 
         // -------------------- DATA LAYER --------------------
-
         const DataService = (function() {
             // Private variables
             let damData = [];
@@ -651,7 +594,7 @@
             // Create a reverse map from abbreviations to full names
                     const reverseStateMap = Object.fromEntries(Object.entries(stateMap).map(([name, abbr]) => [abbr.toLowerCase(), name])
                 );
-            
+
             // Private methods
             async function fetchData() {
                 try {
@@ -740,16 +683,19 @@
                     });
                 },
 
-searchDams: function(criteria) {
+                searchDams: function(criteria) {
     return damData.filter(dam => {
         // Text search
         if (criteria.text) {
             const searchTerm = criteria.text.trim().toLowerCase();
-            const maybeAbbr = stateMap[searchTerm];
-            const maybeFull = reverseStateMap[searchTerm];
+
+            const maybeAbbr = stateMap[searchTerm]; // e.g., "texas" => "TX"
+            const maybeFull = reverseStateMap[searchTerm]; // e.g., "tx" => "Texas"
+
             const nameMatch = dam.name.toLowerCase().includes(searchTerm);
             const locationMatch = dam.location.toLowerCase().includes(searchTerm);
             const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+
             let stateMatch = false;
             if (dam.state) {
                 const damStateUpper = dam.state.toUpperCase();
@@ -761,26 +707,24 @@ searchDams: function(criteria) {
                     stateMatch = true;
                 }
             }
+
             let descriptionMatch = false;
             if (dam.incidents && dam.incidents.length > 0) {
                 descriptionMatch = dam.incidents.some(incident =>
                     incident.description && incident.description.toLowerCase().includes(searchTerm)
                 );
             }
+
             if (!(nameMatch || locationMatch || countyMatch || stateMatch || descriptionMatch)) {
                 return false;
             }
-        }
-
-        // State filter
-        if (criteria.state && dam.state !== criteria.state) {
-            return false;
         }
 
         // Fatality count filter
         if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
             const minFatalities = criteria.minFatalities !== undefined ? parseInt(criteria.minFatalities) : 0;
             const maxFatalities = criteria.maxFatalities !== undefined ? parseInt(criteria.maxFatalities) : Infinity;
+
             if (dam.fatalities < minFatalities || dam.fatalities > maxFatalities) {
                 return false;
             }
@@ -791,12 +735,15 @@ searchDams: function(criteria) {
             if (!dam.incidents || dam.incidents.length === 0) {
                 return false;
             }
+
             const startDate = criteria.startDate ? new Date(criteria.startDate) : new Date(0);
             const endDate = criteria.endDate ? new Date(criteria.endDate) : new Date(9999, 11, 31);
+
             const hasIncidentInRange = dam.incidents.some(incident => {
                 const incidentDate = parseDateString(incident.date);
                 return incidentDate >= startDate && incidentDate <= endDate;
             });
+
             if (!hasIncidentInRange) {
                 return false;
             }
@@ -804,8 +751,7 @@ searchDams: function(criteria) {
 
         return true;
     });
-}
-
+},
 
                 // Utility function exposed for date parsing elsewhere
                 parseDateString: parseDateString
@@ -885,7 +831,7 @@ searchDams: function(criteria) {
                 damHeader.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
-                    
+
                     // Handle the dam image
                     if (isVisible && dam.imageUrl) {
                         // Add image if it doesn't exist
@@ -1030,7 +976,7 @@ searchDams: function(criteria) {
 
                         if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
                             const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
-                        
+
                             // Load dam image manually if necessary
                             const dam = DataService.getDamById(damId);
                             if (isVisible && dam.imageUrl) {
@@ -1273,13 +1219,20 @@ searchDams: function(criteria) {
 
             // Perform search based on search criteria
             function performSearch(criteria) {
+                // Apply search
                 const filteredDams = dataService.searchDams(criteria);
+
+                // Update UI with filtered dams
                 PaginationController.setFilteredDams(filteredDams);
+
+
+                // Update map markers
                 const visibleDamIds = filteredDams.map(dam => dam.id);
                 mapCtrl.filterMarkers(visibleDamIds);
+
+                // Update active filters display
                 updateActiveFilters(criteria);
             }
-
 
             // Apply advanced search filters
             function applyAdvancedSearch() {
@@ -1289,20 +1242,15 @@ searchDams: function(criteria) {
                     endDate: DOM.incidentEndDate.value || undefined,
                     minFatalities: DOM.fatalityMin.value || undefined,
                     maxFatalities: DOM.fatalityMax.value || undefined,
-                    keywords: DOM.keywordSearch.value || undefined,
-                    state: DOM.stateFilter.value || undefined
+                    keywords: DOM.keywordSearch.value || undefined
                 };
-            
+
                 // Combine keyword search with text search
                 if (criteria.keywords) {
-                    criteria.text = criteria.text ? `${criteria.text} ${criteria.keywords}` : criteria.keywords;
+                    criteria.text = criteria.text ? 
+                        `${criteria.text} ${criteria.keywords}` : 
+                        criteria.keywords;
                 }
-
-    performSearch(criteria);
-    // Hide the advanced search panel
-    DOM.advancedSearchPanel.style.display = 'none';
-}
-
 
                 performSearch(criteria);
 
@@ -1462,7 +1410,7 @@ searchDams: function(criteria) {
 showDamDetails: function(damId) {
     const allDams = DataService.getSortedDams(); // Or getData() if not sorted
     const index = allDams.findIndex(d => d.id === damId);
-    
+
     if (index === -1) return;
 
     const PAGE_SIZE = 20;
@@ -1481,7 +1429,7 @@ showDamDetails: function(damId) {
             UIController.highlightDamInList(damId);
         }, 100);
     };
-    
+
     // Trigger refresh manually to load correct page and call custom logic
     PaginationController.refresh();
 

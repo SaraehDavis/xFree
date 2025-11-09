@@ -841,6 +841,7 @@
                 keywordSearch: document.getElementById('keywordSearch'),
                 applyAdvancedSearch: document.getElementById('applyAdvancedSearch'),
                 resetAdvancedSearch: document.getElementById('resetAdvancedSearch'),
+                stateFilter: document.getElementById('stateFilter'),
                 activeFilters: document.getElementById('activeFilters')
             };
 
@@ -1299,7 +1300,8 @@
                     endDate: DOM.incidentEndDate.value || undefined,
                     minFatalities: DOM.fatalityMin.value || undefined,
                     maxFatalities: DOM.fatalityMax.value || undefined,
-                    keywords: DOM.keywordSearch.value || undefined
+                    keywords: DOM.keywordSearch.value || undefined,
+                    state: DOM.stateFilter.value || undefined
                 };
 
                 // Combine keyword search with text search

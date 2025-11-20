@@ -742,6 +742,13 @@
 
                 searchDams: function(criteria) {
     return damData.filter(dam => {
+        
+        if (criteria.state) {
+            if (!dam.state || dam.state.toUpperCase() !== criteria.state.toUpperCase()) {
+                return false;
+            }
+        }
+        
         // Text search
         if (criteria.text) {
             const searchTerm = criteria.text.trim().toLowerCase();

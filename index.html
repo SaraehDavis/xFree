@@ -926,6 +926,14 @@
                 <div class="incident-fatalities">${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
                 <div class="incident-description">${incident.description}</div>
                 `;
+                // Add validation link if available
+                if (incident.validation_webaddress) {
+                    cardHtml += `
+                    <div class="incident-validation">
+                    <a href="${incident.validation_webaddress}" target="_blank">View Source</a>
+                    </div>
+                    `;
+                }
                 // Append image if available
                 if (incident.image) {
                     const imagePath = `docs/assets/images/${incident.image}`;

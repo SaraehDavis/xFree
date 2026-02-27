@@ -49,12 +49,17 @@
         </div>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search by name of dam, location, description...">
-        <button class="advanced-search-btn" id="advancedSearchBtn">Advanced Search</button>
-        <button class="add-incident-btn" onclick="openReportForm()">Report Incident</button>
+    <<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search by name of dam, location, description...">
+    <div class="dropdown-container">
+        <button class="dropdown-btn" id="dropdownBtn">▼ Advanced Search</button>
+        <div class="dropdown-content" id="dropdownContent">
+            <div class="dropdown-item" id="advancedSearchBtn">Advanced Search Options</div>
+        </div>
     </div>
-
+    <button class="add-incident-btn" onclick="openReportForm()">Report Incident</button>
+</div>
+        
     <div class="advanced-search-panel" id="advancedSearchPanel">
         <div class="advanced-search-header">
             <h3>Advanced Search</h3>

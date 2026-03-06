@@ -694,8 +694,15 @@ return null;
 
                 // Advanced search toggle
                 DOM.advancedSearchBtn.addEventListener('click', function() {
-                    DOM.advancedSearchPanel.style.display = DOM.advancedSearchPanel.style.display === 'block' ? 'none' : 'block';
-                });
+              const isOpen = DOM.advancedSearchPanel.style.display === 'block';
+          
+              DOM.advancedSearchPanel.style.display = isOpen ? 'none' : 'block';
+
+                   // Toggle arrow indicator
+                   this.classList.toggle('open');
+                   this.innerHTML = isOpen ? 'Advanced Search ▼' : 'Advanced Search ▲';
+               });
+
 
                 // Close advanced search
                 DOM.closeAdvancedSearch.addEventListener('click', function() {

@@ -163,7 +163,19 @@
             margin: 0;
             color: #333;
         }
+       #advancedSearchBtn {
+  cursor: pointer;
+  background-color: #eee;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
 
+#advancedSearchBtn.open {
+  background-color: #ddd;
+}
         .close-btn {
             background: none;
             border: none;

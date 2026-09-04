@@ -458,26 +458,23 @@
                 margin-top: 20px;
             }
 
-        @media (max-width: 768px) {
-            .map-container {
-                height: 350px;
-            }
+@media (max-width: 768px) {
+    .map-container {
+        height: 350px;
+    }
 
-            .search-container {
-                width: 100%;
-            }
-               
-            .search-row {
-               flex-direction: column;
-               gap: 10px;
-           }
-
-            #searchInput {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .add-incident-btn {
-                width: 100%;
-            }
-        }
+    .search-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-container {
+        width: 100%;
+        order: 2; /* NEW: Search bar goes second on mobile */
+    }
+    
+    .add-incident-btn {
+        width: 100%;
+        order: 1; /* NEW: Button goes first (above) on mobile */
+    }
+}

@@ -141,10 +141,11 @@
             const maybeAbbr = stateMap[searchTerm]; // e.g., "texas" => "TX"
             const maybeFull = reverseStateMap[searchTerm]; // e.g., "tx" => "Texas"
 
-            const nameMatch = dam.name.toLowerCase().includes(searchTerm);
-            const locationMatch = dam.location.toLowerCase().includes(searchTerm);
-            const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
-
+            const nameMatch = dam.name?.toLowerCase().includes(searchTerm) || false;
+            const locationMatch = dam?.location.toLowerCase().includes(searchTerm) || false;
+            const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;            
+            const riverMatch = dam.River_name?.toLowerCase().includes(searchTerm) || false;
+         
             let stateMatch = false;
             if (dam.state) {
                 const damStateUpper = dam.state.toUpperCase();

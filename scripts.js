@@ -107,14 +107,25 @@
                 },
 
                 getSortedDams: function(sortBy = 'fatalities', order = 'desc') {
-                    return [...damData].sort((a, b) => {
-                        if (order === 'desc') {
-                            return b[sortBy] - a[sortBy];
-                        } else {
-                            return a[sortBy] - b[sortBy];
-                        }
-                    });
-                },
+                return [...damData].sort((a, b) => {
+                    if (sortBy === 'fatalities') {
+                        return order === 'desc' ? b[sortBy] - a[sortBy] : a[sortBy] - b[sortBy];
+                    } else if (sortBy === 'name') {
+                        const nameA = (a.name || '').toLowerCase();
+                        const nameB = (b.name || '').toLowerCase();
+                        return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+                    } else if (sortBy === 'state') {
+                        const stateA = (a.state || '').toLowerCase();
+                        const stateB = (b.state || '').toLowerCase();
+                        return order === 'asc' ? stateA.localeCompare(stateB) : stateB.localeCompare(stateA);
+                    } else if (sortBy === 'river') {
+                        const riverA = (a.River_name || '').toLowerCase();
+                        const riverB = (b.River_name || '').toLowerCase();
+                        return order === 'asc' ? riverA.localeCompare(riverB) : riverB.localeCompare(riverA);
+                    }
+                    return 0;
+                });
+            },
 
                 searchDams: function(criteria) {
     return damData.filter(dam => {
@@ -222,6 +233,7 @@
                 maxFatalities: document.getElementById('maxFatalities'),
                 siteWithMostFatalities: document.getElementById('siteWithMostFatalities'),
                 avgFatalitiesPerSite: document.getElementById('avgFatalitiesPerSite'),
+                sortBy: document.getElementById('sortBy'),
 
                 // Advanced search elements
                 advancedSearchBtn: document.getElementById('advancedSearchBtn'),
@@ -692,6 +704,19 @@ return null;
                     const searchTerm = this.value.toLowerCase();
                     performSearch({ text: searchTerm });
                 });
+             
+             // Sort Dams By Feature
+             DOM.sortBy.addEventListener('change', function() {
+                 const sortValue = this.value;
+                 const order = sortValue === 'fatalities' ? 'desc' : 'asc';
+                 const sortedDams = dataService.getSortedDams(sortValue, order);
+                 PaginationController.setFilteredDams(sortedDams);
+                 
+                 // Update map markers
+                 const visibleDamIds = sortedDams.map(dam => dam.id);
+                 mapCtrl.filterMarkers(visibleDamIds);
+             });
+
 
                 // Advanced search toggle
                 DOM.advancedSearchBtn.addEventListener('click', function() {
@@ -726,13 +751,36 @@ return null;
                 // Apply search
                 const filteredDams = dataService.searchDams(criteria);
 
+              // Apply current sort to filtered results
+                 const sortValue = DOM.sortBy.value;
+                 const order = sortValue === 'fatalities' ? 'desc' : 'asc';
+                 const sortedFilteredDams = [...filteredDams].sort((a, b) => {
+                     if (sortValue === 'fatalities') {
+                         return order === 'desc' ? b[sortValue] - a[sortValue] : a[sortValue] - b[sortValue];
+                     } else if (sortValue === 'name') {
+                         const nameA = (a.name || '').toLowerCase();
+                         const nameB = (b.name || '').toLowerCase();
+                         return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+                     } else if (sortValue === 'state') {
+                         const stateA = (a.state || '').toLowerCase();
+                         const stateB = (b.state || '').toLowerCase();
+                         return order === 'asc' ? stateA.localeCompare(stateB) : stateB.localeCompare(stateA);
+                     } else if (sortValue === 'river') {
+                         const riverA = (a.River_name || '').toLowerCase();
+                         const riverB = (b.River_name || '').toLowerCase();
+                         return order === 'asc' ? riverA.localeCompare(riverB) : riverB.localeCompare(riverA);
+                     }
+                     return 0;
+                 });
+
+
                 // Update UI with filtered dams
-                PaginationController.setFilteredDams(filteredDams);
+                PaginationController.setFilteredDams(sortedFilteredDams);
 
 
                 // Update map markers
-                const visibleDamIds = filteredDams.map(dam => dam.id);
-                mapCtrl.filterMarkers(visibleDamIds);
+                 const visibleDamIds = sortedFilteredDams.map(dam => dam.id);
+                 mapCtrl.filterMarkers(visibleDamIds);
 
                 // Update active filters display
                 updateActiveFilters(criteria);

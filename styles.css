@@ -251,6 +251,50 @@
             font-weight: bold;
         }
 
+       .sort-controls {
+           display: flex;
+           align-items: center;
+           gap: 10px;
+           margin-bottom: 15px;
+           padding-bottom: 15px;
+           border-bottom: 1px solid #eee;
+       }
+       
+       .sort-controls label {
+           font-weight: bold;
+           color: #555;
+           white-space: nowrap;
+       }
+       
+       #sortBy {
+           padding: 8px 12px;
+           border: 1px solid #ddd;
+           border-radius: 4px;
+           font-size: 14px;
+           background-color: white;
+           cursor: pointer;
+           flex-grow: 1;
+           transition: border-color 0.3s, box-shadow 0.3s;
+       }
+       
+       #sortBy:focus {
+           outline: none;
+           border-color: #3498db;
+           box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+       }
+       
+       @media (max-width: 768px) {
+           .sort-controls {
+               flex-direction: column;
+               align-items: stretch;
+               gap: 5px;
+           }
+           
+           .sort-controls label {
+               text-align: left;
+           }
+       }
+
         .dam-list {
             background-color: white;
             border-radius: 8px;

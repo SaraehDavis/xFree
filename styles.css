@@ -252,11 +252,14 @@
         }
 
        .sort-controls {
+           background-color: white;
+           border-radius: 8px 8px 0 0; /* Rounded top corners only */
+           padding: 20px 20px 15px 20px; /* Match dam-list padding */
+           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
            display: flex;
            align-items: center;
            gap: 10px;
-           margin-bottom: 15px;
-           padding-bottom: 15px;
+           margin-bottom: 0; /* Remove margin to connect with dam-list */
            border-bottom: 1px solid #eee;
        }
        
@@ -282,28 +285,40 @@
            border-color: #3498db;
            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
        }
-       
-       @media (max-width: 768px) {
-           .sort-controls {
-               flex-direction: column;
-               align-items: stretch;
-               gap: 5px;
-           }
-           
-           .sort-controls label {
-               text-align: left;
-           }
+              
+              @media (max-width: 768px) {
+                  .sort-controls {
+                      flex-direction: column;
+                      align-items: stretch;
+                      gap: 5px;
+                      padding: 15px;
+                  }
+                  
+                  .sort-controls label {
+                      text-align: left;
+                  }
+                  .dam-list {
+                     padding: 0 15px 15px 15px;
+                  }
+    
+                  .dam-item:first-child {
+                     padding-top: 15px;
+                  }
+              }
+
+       .dam-list {
+           background-color: white;
+           border-radius: 0 0 8px 8px; 
+           padding: 0 20px 20px 20px; 
+           max-height: 600px;
+           overflow-y: auto;
+           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+           margin-top: 0; /* Remove margin to connect with sort controls */
        }
 
-        .dam-list {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            max-height: 600px;
-            overflow-y: auto;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
+       .dam-item:first-child {
+           padding-top: 20px;
+       }
         .dam-item {
             padding: 15px;
             border-bottom: 1px solid #eee;

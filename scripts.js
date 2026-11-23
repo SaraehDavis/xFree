@@ -106,7 +106,7 @@
                     return damData.find(dam => dam.id === id);
                 },
 
-                getSortedDams: function(sortBy = 'fatalities', order = 'desc') {
+                getSortedDams: function(sortBy = 'state', order = 'desc') {
                 return [...damData].sort((a, b) => {
                     if (sortBy === 'fatalities') {
                         return order === 'desc' ? b[sortBy] - a[sortBy] : a[sortBy] - b[sortBy];

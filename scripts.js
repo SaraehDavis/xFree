@@ -106,7 +106,7 @@
                     return damData.find(dam => dam.id === id);
                 },
 
-                getSortedDams: function(sortBy = 'state', order = 'desc') {
+                getSortedDams: function(sortBy = 'name', order = 'asc') {
                 return [...damData].sort((a, b) => {
                     if (sortBy === 'fatalities') {
                         return order === 'desc' ? b[sortBy] - a[sortBy] : a[sortBy] - b[sortBy];
@@ -952,7 +952,7 @@ return null;
                         uiCtrl.updateStatistics(stats);
 
                         // Populate dam list with sorted dams
-                        const sortedDams = dataService.getSortedDams();
+                        const sortedDams = dataService.getSortedDams('name', 'asc');
                         PaginationController.setFilteredDams(sortedDams);
 
                         // Setup event listeners
